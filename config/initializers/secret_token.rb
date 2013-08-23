@@ -22,16 +22,18 @@
 # if you're sharing your code publicly.
 require 'securerandom'
 
-def secure_token
-  token_file = Rails.root.join('.secret')
-  if File.exist?(token_file)
-    # Use the existing token.
-    File.read(token_file).chomp
-  else
-    # Generate a new token and store it in token_file.
-    token = SecureRandom.hex(64)
-    File.write(token_file, token)
-    token
-  end
-end
+Wordsbond::Application.config.secret_key_base = '999490fb00704qe65589f39d096a8d047f768ebf2041a57ba4c29a39dacf4f3eb6b36b472d74474c313263f56b805c168b1560fc6e20e7c822156e3854a2547c'
+
+# def secure_token
+#   token_file = Rails.root.join('.secret')
+#   if File.exist?(token_file)
+#     # Use the existing token.
+#     File.read(token_file).chomp
+#   else
+#     # Generate a new token and store it in token_file.
+#     token = SecureRandom.hex(64)
+#     File.write(token_file, token)
+#     token
+#   end
+# end
 

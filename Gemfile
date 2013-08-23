@@ -3,23 +3,30 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
+
 # Use sqlite3 as the database for Active Record
-gem "pg", "~> 0.16.0"
+# gem "pg", "~> 0.16.0"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
-
+gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
+gem 'slim'
 
+gem 'simple_form', '~> 3.0.0.rc'
+gem 'client_side_validations', git: 'git://github.com/bcardarella/client_side_validations.git', branch: '4-0-beta'
+gem 'client_side_validations-simple_form', git: 'git://github.com/saveritemedical/client_side_validations-simple_form.git'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'bootstrap-sass'
+
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -33,19 +40,25 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.13.1'
+	 gem 'better_errors'
+   gem 'rspec-rails'
+   gem 'capybara'
+   gem "capybara-webkit"
+   gem 'guard-rspec'
+   gem 'database_cleaner'
 end
 
 group :test do
-  gem 'capybara', '2.1.0'
+
+  # gem 'factory_girl_rails'
 end
 group :production do
-	gem "pg", "~> 0.16.0"
-	gem 'rails_12factor', '0.0.2'
+	# gem "pg", "~> 0.16.0"
+	# gem 'rails_12factor', '0.0.2'
 end
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
 # gem 'unicorn'
