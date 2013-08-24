@@ -2,6 +2,7 @@ Wordsbond::Application.routes.draw do
 get 'home' => 'pages#home'
 
 resources :users
+get 'signup' => 'users#new'
 
 
 

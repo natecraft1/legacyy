@@ -1,0 +1,26 @@
+Problem to be solved:
+
+no meaningful way to remember and display content about your life. this product will be different from 
+existing websites in that...
+
+MVP:
+
+- users can create an account and login
+- users can make single page posts about many specific years of their life with 1 picture, one text box for content and one post about what they learned or a specific memory
+- users can view their "life timeline"
+
+Milestones:
+- home page with a link to sign up, sign in
+- sign up page that stores new user in db
+- user sessions on login
+- be able to store posts for specific users and specific years to db
+- display those posts
+- potentially on the homepage as well 
+
+Future plans:
+- users can add monthly posts
+
+
+
+
+

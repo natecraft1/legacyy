@@ -12,8 +12,6 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
 
-
-
 	describe "when name is not present" do
     before { @user.name = "" ; @user.save }
     it { should_not be_valid }
@@ -49,7 +47,7 @@ describe User do
     before { @user.password = @user.password_confirmation = "a" * 5 }
     it { should be_invalid }
   end
-  
+
 	describe "return value of authenticate method" do
 	  before { @user.save }
 	  let(:found_user) { User.find_by(email: @user.email) }
@@ -66,4 +64,5 @@ describe User do
 	  end
 	end
 
+	
 end

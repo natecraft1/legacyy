@@ -12,8 +12,7 @@ describe "home page content"  do
 	it "should have a login link" do
 		expect(page).to have_link("login")
 	end
-
-
 end
+
 
 

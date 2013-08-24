@@ -50,7 +50,7 @@ end
 
 group :test do
 
-  # gem 'factory_girl_rails'
+  gem 'factory_girl_rails'
 end
 group :production do
 	# gem "pg", "~> 0.16.0"
@@ -58,7 +58,7 @@ group :production do
 end
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', require: 'bcrypt'
 
 # Use unicorn as the app server
 # gem 'unicorn'
