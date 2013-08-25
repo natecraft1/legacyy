@@ -49,8 +49,7 @@ group :development, :test do
 end
 
 group :test do
-
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '4.2.1'
 end
 group :production do
 	# gem "pg", "~> 0.16.0"

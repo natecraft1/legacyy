@@ -1,4 +1,9 @@
-html
-	head 
- 		title Sign up
-  		p Sign up
+title Sign up
+body
+ 	p Sign up
+ 	= simple_form_for @user, :validate => true do |f|
+ 	  = f.input :name 
+ 	  = f.input :email
+ 	  = f.input :password
+ 	  = f.input :password_confirmation
+ 	  = f.button :submit

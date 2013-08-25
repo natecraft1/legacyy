@@ -209,7 +209,7 @@ DEPENDENCIES
   client_side_validations-simple_form!
   coffee-rails (~> 4.0.0)
   database_cleaner
-  factory_girl_rails
+  factory_girl_rails (= 4.2.1)
   guard-rspec
   jbuilder (~> 1.2)
   jquery-rails
