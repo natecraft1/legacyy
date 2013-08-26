@@ -1,8 +1,13 @@
 Wordsbond::Application.routes.draw do
 get 'home' => 'pages#home'
+root :to => 'pages#home'
 
 resources :users
 get 'signup' => 'users#new'
+
+resources :sessions, only: [:new, :create, :destroy]
+get 'signin' => 'sessions#new'
+delete 'signout' => 'sessions#destroy'
 
 
 
