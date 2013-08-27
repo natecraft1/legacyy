@@ -50,6 +50,8 @@ end
 
 group :test do
   gem 'factory_girl_rails', '4.2.1'
+  gem "launchy"
+  # gem "selenium-webdriver", "~> 2.35.1"
 end
 group :production do
 	# gem "pg", "~> 0.16.0"

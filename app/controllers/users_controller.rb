@@ -2,17 +2,22 @@ class UsersController < ApplicationController
 	
 	def new
 		@user = User.new
-		puts "users#new called with #{@user}"
 	end
 
 	def create
+
 		@user = User.new(user_params)
-		puts "users#create action called with #{@user}"
+		yearnow = Time.now.strftime("%Y/%m/%d").gsub!('/', '').scan(/..../)[0].to_i
+		yearborn = @user.date_of_birth.to_s.gsub!('-', '').scan(/..../)[0].to_i
+		datenow = Time.now.strftime("%Y/%m/%d").gsub!('/', '').scan(/..../)[1].to_i
+		dateborn = @user.date_of_birth.to_s.gsub!('-', '').scan(/..../)[1].to_i
+	  age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1  
+	  puts "$$$$$$$ AGE = #{age}"
+
 		if @user.save
-			puts "after save, sign in is called"
 			sign_in @user
 			redirect_to(@user)
-			flash.now[:notice] = "welcome!"
+
 		else
 			render 'new'
 		end
@@ -26,7 +31,8 @@ class UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:name, :email, :password, :password_confirmation)
+		params.require(:user).permit(:name, :email, :password, :password_confirmation, :date_of_birth)
 	end
 end
+
 

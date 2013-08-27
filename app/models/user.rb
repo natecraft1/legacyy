@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+	# has_many :years
+
+
 	before_save { self.email = email.downcase }
   before_create :create_remember_token
 	validates :name, presence: true, length: {minimum: 3, maximum: 25}, allow_blank: false, uniqueness: true
@@ -11,19 +14,15 @@ class User < ActiveRecord::Base
 	validates :password, :confirmation => true
 
 	def User.new_remember_token
-		puts " puts user.new_remember_token called"
 		SecureRandom.urlsafe_base64
 	end
 
 	def User.encrypt(token)
-		puts "puts user.encrypt called with #{token}"
     Digest::SHA1.hexdigest(token.to_s)
 	end
 
 	private
 		def create_remember_token
-			puts " puts remember_token_created for #{self}"
-			puts self
 			self.remember_token = User.encrypt(User.new_remember_token)
 		end
 

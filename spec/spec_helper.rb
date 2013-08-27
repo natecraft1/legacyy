@@ -4,6 +4,9 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'database_cleaner'
+require 'capybara/rails'
+require 'capybara/rspec'
+
 Capybara.default_driver = :webkit
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -17,7 +20,9 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 
 RSpec.configure do |config|
-  # ## Mock Framework
+  # config.before (scope = :suite) do
+  # %x[bundle exec rake assets:precompile]
+  # end
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
   #
