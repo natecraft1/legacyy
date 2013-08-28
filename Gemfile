@@ -9,6 +9,7 @@ gem 'binding_of_caller'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 gem 'pg'
+gem 'paperclip'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -51,7 +52,7 @@ end
 group :test do
   gem 'factory_girl_rails', '4.2.1'
   gem "launchy"
-  # gem "selenium-webdriver", "~> 2.35.1"
+  gem "selenium-webdriver", "~> 2.35.1"
 end
 group :production do
 	# gem "pg", "~> 0.16.0"

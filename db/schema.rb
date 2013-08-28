@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130826012133) do
+ActiveRecord::Schema.define(version: 20130827173735) do
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -24,5 +24,17 @@ ActiveRecord::Schema.define(version: 20130826012133) do
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
+
+  create_table "years", force: true do |t|
+    t.string   "what_i_did"
+    t.string   "lesson_or_story"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.integer  "user_id"
+  end
 
 end

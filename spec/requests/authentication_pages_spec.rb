@@ -7,11 +7,8 @@ describe "Authentication" do
   describe "signin page" do
     before { visit signin_path }
     
-    it { should have_title('Sign in') }
-
     describe "with invalid information" do
       before { click_button "Save Session" }
-
       
       describe "after visiting another page" do
         before { click_link "Home" }
@@ -27,8 +24,6 @@ describe "Authentication" do
         click_link "login"
       end
 
-      it { should have_title(user.name) }
-      it { should have_link('Profile',     href: user_path(user)) }
       it { should have_link('logout',    href: signout_path) }
       it { should_not have_link('login', href: signin_path) }
     end

@@ -1,0 +1,58 @@
+Story: Account Holder withdraws cash
+ 
+As an Account Holder
+I want to withdraw cash from an ATM
+So that I can get money when the bank is closed
+ 
+Scenario 1: Account has sufficient funds
+Given the account balance is \$100
+ And the card is valid
+ And the machine contains enough money
+When the Account Holder requests \$20
+Then the ATM should dispense \$20
+ And the account balance should be \$80
+ And the card should be returned
+ 
+Scenario 2: Account has insufficient funds
+Given the account balance is \$10
+ And the card is valid
+ And the machine contains enough money
+When the Account Holder requests \$20
+Then the ATM should not dispense any money
+ And the ATM should say there are insufficient funds
+ And the account balance should be \$20
+ And the card should be returned
+ 
+Scenario 3: Card has been disabled
+Given the card is disabled
+When the Account Holder requests \$20
+Then the ATM should retain the card
+And the ATM should say the card has been retained
+ 
+Scenario 4: The ATM has insufficient funds
+
+in order to make a profile
+as a potential user
+create an account 
+
+in order to access my profile
+as a recently signed up user
+login
+
+in order to start my story
+as a user 
+add a post about a specific year
+
+in order to update my profile
+as a user 
+edit posts about particular years 
+
+in order to view the life timeline
+as a user 
+scroll through posts
+
+in order to edit account information
+as a user
+edit the form
+
+Scenario 

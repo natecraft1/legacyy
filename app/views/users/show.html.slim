@@ -1,4 +1,9 @@
 title = @user.name
 =<> @user.name
 =<> @user.email
-=<> @user.date_of_birth
+p This is me, #{@user.name}, at #{@age}
+= simple_form_for([@user, @year]) do |f|
+  = f.input :what_i_did
+  = f.input :lesson_or_story
+  = f.file_field :avatar
+  = f.button :submit 

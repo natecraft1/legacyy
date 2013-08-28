@@ -7,12 +7,7 @@ class UsersController < ApplicationController
 	def create
 
 		@user = User.new(user_params)
-		yearnow = Time.now.strftime("%Y/%m/%d").gsub!('/', '').scan(/..../)[0].to_i
-		yearborn = @user.date_of_birth.to_s.gsub!('-', '').scan(/..../)[0].to_i
-		datenow = Time.now.strftime("%Y/%m/%d").gsub!('/', '').scan(/..../)[1].to_i
-		dateborn = @user.date_of_birth.to_s.gsub!('-', '').scan(/..../)[1].to_i
-	  age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1  
-	  puts "$$$$$$$ AGE = #{age}"
+
 
 		if @user.save
 			sign_in @user
@@ -25,7 +20,23 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		# puts User.all.to_json
 		@user = User.find(params[:id])
+		@year = Year.new(:user => @user)
+		yearnow = Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[0].to_i
+		yearborn = @user.date_of_birth.to_s.gsub('-', '').scan(/..../)[0].to_i
+		datenow = Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[1].to_i
+		dateborn = @user.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
+		
+		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{yearnow.class}"
+		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{yearborn.class}"
+		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{datenow.class}"
+		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{dateborn.class}"
+
+
+	  @age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1  
+	  puts "$$$$$$$ AGE = #{@age}"
+
 	end
 
 	private

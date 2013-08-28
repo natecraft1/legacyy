@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	# has_many :years
+	has_many :years
 
 
 	before_save { self.email = email.downcase }
