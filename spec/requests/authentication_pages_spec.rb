@@ -5,6 +5,7 @@ describe "Authentication" do
   subject { page }
 
   describe "signin page" do
+    
     before { visit signin_path }
     
     describe "with invalid information" do
@@ -14,7 +15,6 @@ describe "Authentication" do
         before { click_link "Home" }
         it { should_not have_link('Profile') }
       end
-#      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
     end
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }

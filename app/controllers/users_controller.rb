@@ -34,8 +34,9 @@ class UsersController < ApplicationController
 		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{dateborn.class}"
 
 
-	  @age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1  
-	  puts "$$$$$$$ AGE = #{@age}"
+	  @age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1
+	  @ageray = (0..@age).to_a.reverse
+	  puts "$$$$$$$ AGERAY = #{@ageray}"
 
 	end
 
