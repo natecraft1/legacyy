@@ -1,19 +1,20 @@
 title = @user.name
 =<> @user.name
 =<> @user.email
-p This is me, #{@user.name}, at #{@age}
+p This is me, #{@user.name}, at #{@user.age}
+- @user.ageray.each do |year|
+  = link_to year.to_s, '#', class: 'year'
+  = ", "
+
 .links
-  - @ageray.each do |year|
-    - i =  @ageray.index(year)
-    - range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
 = simple_form_for([@user, @year]) do |f|
+  = f.hidden_field :year, value: 47
   = f.input :what_i_did
   = f.input :lesson_or_story
   = f.file_field :avatar
   = f.button :submit 
 
 
-0  1  2  3  4  5  6  7  8  9  10
-76 75 74 73 72 71 70 69 68 67 66
-1  2  3  4  5  6  7  8  9  10 11
-75 74 73 72 71 70 69 68 67 66 65
+/ - @ageray.each do |year|
+/   - i =  @ageray.index(year)
+/   - range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse

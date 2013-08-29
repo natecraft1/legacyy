@@ -13,12 +13,38 @@ class User < ActiveRecord::Base
 	validates :password, length: { minimum: 6, maximum: 20 }
 	validates :password, :confirmation => true
 
+	
+
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64
 	end
 
 	def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
+	end
+
+	def age
+    @age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
+  end
+
+  def ageray
+    (0..age).to_a.reverse
+  end
+
+	def yearnow
+    Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[0].to_i
+	end
+	
+	def datenow
+    Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[1].to_i
+	end
+
+	def yearborn
+    self.date_of_birth.to_s.gsub('-', '').scan(/..../)[0].to_i
+	end
+	
+	def dateborn
+    self.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
 	end
 
 	private

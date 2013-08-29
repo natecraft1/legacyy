@@ -1,5 +1,9 @@
-// $(document).ready(function() {
-// 	$('.get_started').on("click", function() {
-// 		$(this).addClass("hidden");
-// 	});
-// });
+$(document).ready(function() {
+	$(".year").click(function() {
+
+		$('#year_year').val($(this).html());
+
+		
+
+	});
+});

@@ -23,20 +23,21 @@ class UsersController < ApplicationController
 		# puts User.all.to_json
 		@user = User.find(params[:id])
 		@year = Year.new(:user => @user)
-		yearnow = Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[0].to_i
-		yearborn = @user.date_of_birth.to_s.gsub('-', '').scan(/..../)[0].to_i
-		datenow = Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[1].to_i
-		dateborn = @user.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
-		
-		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{yearnow.class}"
-		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{yearborn.class}"
-		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{datenow.class}"
-		puts "$$$$$$$$$$$$$@@@@@@@@@@@ #{dateborn.class}"
+		# I was passing a new year to the show page to be editted 
 
+		# yearnow = Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[0].to_i
+		# yearborn = @user.date_of_birth.to_s.gsub('-', '').scan(/..../)[0].to_i
+		# datenow = Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[1].to_i
+		# dateborn = @user.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
 
-	  @age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1
-	  @ageray = (0..@age).to_a.reverse
-	  puts "$$$$$$$ AGERAY = #{@ageray}"
+	 #  @age = datenow > dateborn ? yearnow - yearborn : yearnow - yearborn - 1
+
+	 #  @ageray = (0..@age).to_a.reverse
+
+	 #  @ageray.each do |year|
+  #   	i =  @ageray.index(year)
+  #   	range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
+  # 	end
 
 	end
 
