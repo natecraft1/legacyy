@@ -1,14 +1,20 @@
 title = @user.name
 =<> @user.name
 =<> @user.email
-p This is me, #{@user.name}, at #{@user.age}
+p.intro 
+       | This is me, #{@user.name}, at
+       span<> 
 - @user.ageray.each do |year|
   = link_to year.to_s, '#', class: 'year'
   = ", "
 
 .links
-= simple_form_for([@user, @year]) do |f|
-  = f.hidden_field :year, value: 47
+/ maybe make it an ajax post
+/ and make the hidden year field have a default value of the first year
+- if flash[:notice]
+  = flash[:notice]
+= simple_form_for([@user, @year], validate: true, remote: true) do |f|
+  = f.hidden_field :year
   = f.input :what_i_did
   = f.input :lesson_or_story
   = f.file_field :avatar

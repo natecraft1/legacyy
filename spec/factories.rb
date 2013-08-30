@@ -7,5 +7,6 @@ FactoryGirl.define do
     email    "user@example.com"
     password "foobar"
     password_confirmation "foobar"
+    date_of_birth "1967-08-26"
   end
 end

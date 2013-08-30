@@ -5,10 +5,8 @@ class YearsController < ApplicationController
 	end
 
   def create
-    puts "#{self} create"
     user = User.find(params[:user_id])
     year = Year.new(year_params)
-    puts "#{params[:year][:year]} = YEAR"
     year.id = params[:year][:year]
     user.years << year
     user.save

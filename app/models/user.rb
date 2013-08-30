@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 	validates :password, length: { minimum: 6, maximum: 20 }
 	validates :password, :confirmation => true
+	validates :date_of_birth, presence: true
 
 	
 
@@ -24,27 +25,27 @@ class User < ActiveRecord::Base
 	end
 
 	def age
-    @age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
+    age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
   end
 
   def ageray
-    (0..age).to_a.reverse
+    ageray ||= (0..age).to_a.reverse
   end
 
 	def yearnow
-    Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[0].to_i
+    yearnow ||= Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[0].to_i
 	end
 	
 	def datenow
-    Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[1].to_i
+    datenow ||= Time.now.strftime("%Y/%m/%d").gsub('/', '').scan(/..../)[1].to_i
 	end
 
 	def yearborn
-    self.date_of_birth.to_s.gsub('-', '').scan(/..../)[0].to_i
+    yearborn ||= self.date_of_birth.to_s.gsub('-', '').scan(/..../)[0].to_i
 	end
 	
 	def dateborn
-    self.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
+    dateborn ||= self.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
 	end
 
 	private
