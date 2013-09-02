@@ -1,0 +1,20 @@
+we are going to make a route/view/controller/model... how can we test it first?
+these tests seem the most pointless
+
+model: 
+look at ur model
+test the validations:
+"a registrant who's name is too short should not be able to sign up" 
+before { @user = User.new }
+describe "name is too short" do
+	before { @user.name = "a" }
+	expect(@user).not_to be_valid
+
+
+end
+
+
+it's hard to know what we need to test for since our projects are driven by features (we don't know ahead of making those features what should be in the model, view, controller)
+
+we are going to make a feature... how can we test it first? 
+what are features?  it's what you want to do next from a user's perspective.  

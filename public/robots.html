@@ -1,0 +1,31 @@
+<script type="text/javascript">
+(function() {
+	console.log("hgey");
+  function splitIntoWords(str) {
+    return str.match(/\w+/g);
+  }
+
+  function Words(source) {
+  	console.log("rub");
+    var words = splitIntoWords(source.toLowerCase());
+    var counts = {};
+
+    words.forEach(function(word) {
+    	console.log(counts[word]);
+      if(counts[word] === undefined) {
+      	console.log(counts[word]);
+        counts[word] = 0;
+      }
+      console.log(counts[word]);
+      counts[word] = counts[word] + 1;
+      console.log(counts[word]);
+
+    });
+
+    return { count: counts };
+
+  }
+  global.Words = Words;
+
+})();
+</script>

@@ -1,0 +1,20 @@
+<script>
+$(document).ready(function() {
+
+  year = window.location.pathname;
+
+   // $.get('/users/' + <%= @user.id %>, function(data) {
+   //   alert("success");
+   // });
+
+  $(".year").click(function() {
+
+  $('#year_year').val($(this).html());
+  var val = $(this).html();
+  $('.intro span').html(val);
+    history.replaceState({}, '', "/" + gon.username + '/' + val );
+
+  return false;
+  });
+});
+</script>

@@ -1,3 +1,4 @@
+= render 'showjs'
 title = @user.name
 =<> @user.name
 =<> @user.email
@@ -7,8 +8,7 @@ p.intro
 - @user.ageray.each do |year|
   = link_to year.to_s, '#', class: 'year'
   = ", "
-/ maybe make it an ajax post
-/ and make the hidden year field have a default value of the first year
+
 - if flash[:notice]
   = flash[:notice]
 = simple_form_for([@user, @year], validate: true) do |f|

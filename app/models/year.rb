@@ -5,8 +5,7 @@ class Year < ActiveRecord::Base
 
   def any_present?
     if %w(what_i_did lesson_or_story).all?{|attr| self[attr].blank?}
-      puts "HEROOOOOOOOOOOOO"
-      errors[:base]<< "At least one field must be present"
+      errors[:base] << "At least one field must be present"
     end
   end
 end

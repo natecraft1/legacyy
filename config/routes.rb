@@ -10,6 +10,7 @@ get 'signup' => 'users#new'
 resources :sessions, only: [:new, :create, :destroy]
 get 'signin' => 'sessions#new'
 delete 'signout' => 'sessions#destroy'
+# get '/:name/:age' => 'users#show'
 
 
 
