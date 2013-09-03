@@ -11,7 +11,8 @@ class YearsController < ApplicationController
   def create
     user = User.find(params[:user_id])
     year = Year.new(year_params)
-    year.id = params[:year][:year]
+    puts "params ==== #{params}"
+    # year.id = params[:year][:year]
     user.years << year
     if !user.save
       flash[:notice] = user.years.last.errors.full_messages[0]

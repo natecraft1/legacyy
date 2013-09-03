@@ -12,6 +12,8 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  
+
 
 	describe "when name is not present" do
     before { @user.name = "" ; @user.save }
@@ -49,13 +51,16 @@ describe User do
     it { should be_invalid }
   end
 
+  # why are the following tests failing??
 	describe "return value of authenticate method" do
 	  before { @user.save }
 	  let(:found_user) { User.find_by(email: @user.email) }
 
 	  describe "with valid password" do
-	    it { should eq found_user.authenticate(@user.password) }
-	  end
+      it "should match" do
+	      expect(@user).to eq found_user.authenticate(@user.password)
+      end
+    end
 
 	  describe "with invalid password" do
 	    let(:user_for_invalid_password) { found_user.authenticate("invalid") }
@@ -69,7 +74,14 @@ describe User do
     its(:remember_token) { should_not be_blank }
   end
 
-	
+  describe "relationships" do
+    before(:each) do
+      @user.save
+    end
+    it "should have a relationship method" do
+      expect(@user).to respond_to(:relationships)
+    end
+  end
 end
 
 

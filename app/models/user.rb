@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	has_many :years
+	has_many :relationships, dependent: :destroy, foreign_key: :follower_id
 
 
 	before_save { self.email = email.downcase }

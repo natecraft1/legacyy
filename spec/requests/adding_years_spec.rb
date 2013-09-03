@@ -5,24 +5,36 @@ describe "user page features" do
 	before { visit user_path(user) }
 	puts :user
 
-	describe "at least one field must be filled in" do
+	describe "creating a year post" do
 		let(:submit) { "Create Year" }
-		before do
-			fill_in "What i did", with: ""
-			fill_in "Lesson or story", with: ""
-			click_button "Create Year"
-		end
 
-		it "should stay on the same page" do
-			expect(current_path).to eq user_path(user)
-		end
+		describe "post attempt that doesn't satisfy validations" do
+			before do
+				fill_in "What i did", with: ""
+				fill_in "Lesson or story", with: ""
+				click_button "Create Year"
+			end
 
-		it "should be invalid" do
-			expect { click_button submit }
-  		expect(page).to have_content("At least one field must be present")
-		end
+			it "should stay on the same page" do
+				expect(current_path).to eq user_path(user)
+			end
+
+			it "should be invalid" do
+				expect { click_button submit }.not_to change(Year, :count)
+	  		expect(page).to have_content("At least one field must be present")
+			end
+	 	end
+
+	 	describe "year post that satisfies validations" do
+	 		before { @year = FactoryGirl.create(:year, :user => user) }
+	 		it "should post the content to the current page" do
+	 			expect(page).to have_content(@year.what_i_did)
+	 		end
+	 	end
 
  	end
+ 	
+
  	describe "click a specific year" do
 
  		before { click_link "33" }
