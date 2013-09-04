@@ -3,8 +3,11 @@ describe "user page features" do
 
 	let(:user) { FactoryGirl.create(:user) }
 	before { visit user_path(user) }
-	puts :user
 
+	# it "should have content at most recent age" do
+	# 	expect(page).to have_content("at 46")
+	# end
+	
 	describe "creating a year post" do
 		let(:submit) { "Create Year" }
 
@@ -29,6 +32,9 @@ describe "user page features" do
 	 		before { @year = FactoryGirl.create(:year, :user => user) }
 	 		it "should post the content to the current page" do
 	 			expect(page).to have_content(@year.what_i_did)
+	 		end
+	 		it "should have a link to create the next year" do
+	 			expect(page).to have_link("Add year 45")
 	 		end
 	 		describe "the form disappears after a year post is submitted" do
 				it "hides the form after a post is submitted" do

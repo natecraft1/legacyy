@@ -12,7 +12,6 @@ class UsersController < ApplicationController
 		if @user.save
 			sign_in @user
 			redirect_to(@user)
-
 		else
 			render 'new'
 		end
@@ -23,8 +22,8 @@ class UsersController < ApplicationController
 		@user = User.find_by_name(params[:name].capitalize)
 		@year = Year.new(:user => @user)
 		gon.age = @user.ageray[0]
-		gon.username = @user.name.gsub(" ", "").downcase;
-		@post = @user.years.all
+		gon.username = @user.name.gsub(" ", "").downcase
+		# @post = @user.years.all
 
 
 		puts "@user.inspect in name === #{@user.inspect}"
@@ -36,10 +35,10 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
   	# @user = User.find_by_name(params[:name].capitalize)
   	gon.age = @user.ageray[0]
-		gon.username = @user.name.gsub(" ", "").downcase;
+		gon.username = @user.name.gsub(" ", "").downcase
 		@year = Year.new(:user => @user)
 
-		@post = @user.years.all
+		# @post = @user.years.all
 		puts "@user.years = #{@user.years.inspect}"
 
 	 #  @ageray.each do |year|

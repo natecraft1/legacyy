@@ -14,8 +14,6 @@ gem 'paperclip'
 gem 'uglifier', '>= 1.3.0'
 gem 'gon'
 gem 'rabl'
-gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
-gem 'protected_attributes'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
