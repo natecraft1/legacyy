@@ -30,6 +30,12 @@ describe "user page features" do
 	 		it "should post the content to the current page" do
 	 			expect(page).to have_content(@year.what_i_did)
 	 		end
+	 		describe "the form disappears after a year post is submitted" do
+				it "hides the form after a post is submitted" do
+					expect(page).not_to have_content("What i did")
+					expect(page).not_to have_button("Create Year")
+				end
+			end
 	 	end
 
  	end

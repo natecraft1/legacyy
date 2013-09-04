@@ -1,20 +1,116 @@
-we are going to make a route/view/controller/model... how can we test it first?
-these tests seem the most pointless
+WHY TEST?
+To make sure everything works, and know what's broken when things go wrong. 
+But more importantly, to guide our thinking.
 
-model: 
-look at ur model
-test the validations:
-"a registrant who's name is too short should not be able to sign up" 
-before { @user = User.new }
-describe "name is too short" do
-	before { @user.name = "a" }
-	expect(@user).not_to be_valid
+HOW TO TEST
+Step 1. Decide what the code will do.
+Step 2. Write a test for it.
+Step 3. Run test, watch it fail. IMPORTANT!1!!
+Step 4. Write the code to make it pass.
+Step 5. Run code, watch it pass.
 
+WHAT ARE WE TESTING FOR?
+EVERYTHING (except controllers)
+This means validations, features, methods... 
 
+Validation example:
+____________________________
+
+Step 1. "Make sure that if a password is not present, the user will not be valid"
+Step 2. In File: app/spec/models/user.rb
+
+describe "when password is not present" do
+ 		before do
+    @user = User.new(name: "Example User", email: "user@example.com",
+                     password: "", password_confirmation: "")
+  	end
+  	it { should_not be_valid } ((Note: "it" in this context is @user))
 end
 
+Step 3. Run test, make sure it fails
+Step 4. In File: app/models/user.rb
+<< we add:
+validates :password, presence: true
+>>
+Step 5.
+Watch it pass!
 
-it's hard to know what we need to test for since our projects are driven by features (we don't know ahead of making those features what should be in the model, view, controller)
+Feature Example:
+____________________
 
-we are going to make a feature... how can we test it first? 
-what are features?  it's what you want to do next from a user's perspective.  
+1. A User unsuccessfully attempts to create a post, so we will re-render the same page and flash an error
+2. In File: app/spec/features/user_pages_spec.rb
+
+describe "post attempt that doesn't satisfy validations" do
+	before do
+		let(:user) { FactoryGirl.create(:user) }
+		visit new_user_year_path(user)
+		fill_in "What i did", with: ""
+		fill_in "Lesson or story", with: ""
+		click_button "Create Year"
+	end
+
+	it "should stay on the same page" do
+		expect(current_path).to eq(new_user_year_path(user))
+	end
+
+	it "should be invalid" do
+		expect(page).to have_content("Error: At least one field must be present")
+	end
+end
+3. Run test, make sure it fails.
+4. Solve the tests (just the solution to "should stay on the same page" is shown here)
+File: app/controllers/years_controller.rb
+
+def create
+	year = Year.new(strong_params_method_here)
+	year.save
+
+	<< we add:
+	if year.save
+		render user_year_path(year)
+	else
+		redirect_to new_user_year_path(user)
+	end
+	>>
+end
+5. Watch it pass!
+
+Method Example:
+________________________
+
+1. We want to make a method called get_age_array that returns an array from 0 to the resuly of the my_age method:
+
+def my_age
+	3
+end
+
+2. In File: app/spec/models/user_spec.rb
+describe "methods" do
+	it "should create an array of 0 to my age" do
+		user = User.new()
+		expect(user.get_year_array).to eq([0,1,2,3])
+	end
+end
+
+3. Run test, make sure it fails
+4. In File: app/models/user.rb
+<< we add:
+def get_year_array
+  (0..my_age).to_a
+end
+>>
+5. Watch it pass!
+
+((Note: since we are ONLY testing the get_year_array method, we can "stub out" other methods that get_year_array calls, such as my_age. Why? Because it could be an expensive call, or my_age could fail causing get_year_array to fail as well. ))
+
+The stubbed out version would look like: 
+
+describe "methods" do
+	it "should create and reverse an array of 0 to my age" do
+		user = User.new()
+    user.stub(:my_age).and_return(3)
+		expect(user.get_year_array).to eq([0,1,2,3])
+	end
+end
+"user.stub(:my_age).and_return(3)" essentially says "any time the my_age method is called in rspec, just return 3"

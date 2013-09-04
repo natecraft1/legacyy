@@ -18,14 +18,29 @@ class UsersController < ApplicationController
 		end
 
 	end
+	
+	def name
+		@user = User.find_by_name(params[:name].capitalize)
+		@year = Year.new(:user => @user)
+		gon.age = @user.ageray[0]
+		gon.username = @user.name.gsub(" ", "").downcase;
+		@post = @user.years.all
+
+
+		puts "@user.inspect in name === #{@user.inspect}"
+
+		render 'show'
+	end
 
 	def show
 		@user = User.find(params[:id])
   	# @user = User.find_by_name(params[:name].capitalize)
-
-		puts "user id ==== #{@user.id}"
+  	gon.age = @user.ageray[0]
 		gon.username = @user.name.gsub(" ", "").downcase;
 		@year = Year.new(:user => @user)
+
+		@post = @user.years.all
+		puts "@user.years = #{@user.years.inspect}"
 
 	 #  @ageray.each do |year|
   #   	i =  @ageray.index(year)

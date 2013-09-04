@@ -11,12 +11,15 @@ class YearsController < ApplicationController
   def create
     user = User.find(params[:user_id])
     year = Year.new(year_params)
-    puts "params ==== #{params}"
     # year.id = params[:year][:year]
     user.years << year
-    if !user.save
+
+    if user.save
+      flash[:notice] = "success"
+    else
       flash[:notice] = user.years.last.errors.full_messages[0]
     end
+
     redirect_to user_path(user)
 
   end

@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe User do
-	before do
-		@user = User.new(name: "Nate", email: "nate@gmail.com", password: "natecraft", password_confirmation: "natecraft")
-	end
+  let(:user)  { FactoryGirl.create(:user) }
+  before { @user = user }
+  
+
 	subject { @user }
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
@@ -17,7 +18,7 @@ describe User do
 
 	describe "when name is not present" do
     before { @user.name = "" ; @user.save }
-    it { should_not be_valid }
+      it { should_not be_valid }
   end
 
   describe "when name is too long" do
@@ -32,7 +33,6 @@ describe User do
     end
     it { should_not be_valid }
   end
-
   describe "when password is not present" do
  		before do
     @user = User.new(name: "Example User", email: "user@example.com",
@@ -53,25 +53,39 @@ describe User do
 
   # why are the following tests failing??
 	describe "return value of authenticate method" do
-	  before { @user.save }
-	  let(:found_user) { User.find_by(email: @user.email) }
+    before { @user.save }
+    let!(:found_user) { User.find_by(email: @user.email) }
 
-	  describe "with valid password" do
-      it "should match" do
-	      expect(@user).to eq found_user.authenticate(@user.password)
-      end
+    describe "with valid password" do
+      it { should eq found_user.authenticate(@user.password) }
     end
 
-	  describe "with invalid password" do
-	    let(:user_for_invalid_password) { found_user.authenticate("invalid") }
-      
-	    it { should_not eq user_for_invalid_password }
-	    specify { expect(user_for_invalid_password).to be_false }
-	  end
-	end
+    describe "with invalid password" do
+      let(:user_for_invalid_password) { found_user.authenticate("invalid") }
+
+      it { should_not eq user_for_invalid_password }
+      specify { expect(user_for_invalid_password).to be_false }
+    end
+  end
 	describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "methods" do 
+    let(:user) { FactoryGirl.create(:user) }
+
+    describe "yearborn" do
+      it "should return 1967" do
+        expect(user.yearborn).to eq(1967)
+      end
+    end
+    describe "ageray" do 
+      it "should return the reverse array of 0 to age" do
+        user.stub(:age).and_return(3)
+        expect(user.ageray).to eq([3,2,1,0])
+      end
+    end
   end
 
   describe "relationships" do
