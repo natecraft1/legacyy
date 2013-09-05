@@ -15,7 +15,7 @@ class YearsController < ApplicationController
     user.years << year
 
     if user.save
-      flash[:notice] = "success"
+      flash[:success] = "success"
     else
       flash[:notice] = user.years.last.errors.full_messages[0]
     end

@@ -9,7 +9,6 @@ p.intro
   =<> link_to year.to_s, name_path(@user.name, year), class: 'year'
   / = link_to year.to_s, '#', class: 'year'
   / = ", "
-
 - if flash[:notice]
   = flash[:notice]
 = simple_form_for([@user, @year], validate: true) do |f|

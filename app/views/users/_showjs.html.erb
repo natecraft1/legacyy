@@ -7,23 +7,41 @@ $(document).ready(function() {
   $('div.what_i_did').html(gon.posts[0].what_i_did);
   $('div.lesson').html(gon.posts[0].lesson_or_story);
 
+  findContent(gon.currentyr);
+  
+  function findContent(value) {  
+    for (var i=0; i<gon.posts.length; i++) {
+      if (gon.posts[i].year == value)
+      {
+        what_i_did = gon.posts[i].what_i_did;
+        lesson_or_story = gon.posts[i].lesson_or_story;
+        insertContent(what_i_did, lesson_or_story);
+        break;
+      }
+      else {
+        $('.what_i_did').html('');
+        $('.lesson').html('');
+      }
+    }
+  }
+  function insertContent(what, lesson) {
+    $('div.lesson').html('');
+    $('div.what_i_did').html('');
+    $('.what_i_did').html(what);
+    $('.lesson').html(lesson);
+  }
 
   $(".year").click(function(event) {
     event.preventDefault();
     $('#year_year').val($(this).html());
-    var href = $(this).attr('href');
-    console.log(href);
     var val = $(this).html();
+    console.log(val);
+    // changes the sentence "this is me at..."
     $('.intro span').html(val);
-    for (var i=0; i<gon.posts.length; i++) {
-      console.log(gon.posts[i].year);
-      if (gon.posts[i].year == val)
-      {
-        $('div.what_i_did').html('');
-        $('div.what_i_did').html(gon.posts[i].what_i_did);
-        $('div.lesson').html(gon.posts[i].lesson_or_story);
-      }
-    }
+    // find the post of the year that is clicked
+    findContent(val);
+  
+
     history.replaceState({}, '', "/" + gon.username + '/' + val );
       return false;
   });

@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 	end
 	
 	def name
+    gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
 		gon.age = @user.ageray[0]
 		gon.username = @user.name.gsub(" ", "").downcase
@@ -26,7 +27,7 @@ class UsersController < ApplicationController
 		gon.posts = @user.years
 
 		# @post = @user.years.all
-		puts "@user.inspect in name === #{@user.inspect}"
+		puts "@user.inspect in name === #{@user.years.inspect}"
 		render 'show'
 	end
 
