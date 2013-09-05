@@ -19,15 +19,14 @@ class UsersController < ApplicationController
 	end
 	
 	def name
-		@user = User.find_by_name(params[:name].capitalize)
-		@year = Year.new(:user => @user)
+		@user = User.find_by_name(params[:name])
 		gon.age = @user.ageray[0]
 		gon.username = @user.name.gsub(" ", "").downcase
+		@year = Year.new(:user => @user)
+		gon.posts = @user.years
+
 		# @post = @user.years.all
-
-
 		puts "@user.inspect in name === #{@user.inspect}"
-
 		render 'show'
 	end
 
@@ -38,7 +37,7 @@ class UsersController < ApplicationController
 		gon.username = @user.name.gsub(" ", "").downcase
 		@year = Year.new(:user => @user)
 
-		# @post = @user.years.all
+		gon.posts = @user.years
 		puts "@user.years = #{@user.years.inspect}"
 
 	 #  @ageray.each do |year|

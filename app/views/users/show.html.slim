@@ -6,8 +6,9 @@ p.intro
        | This is me, #{@user.name}, at
        span<>
 - @user.ageray.each do |year|
-  = link_to year.to_s, '#', class: 'year'
-  = ", "
+  =<> link_to year.to_s, name_path(@user.name, year), class: 'year'
+  / = link_to year.to_s, '#', class: 'year'
+  / = ", "
 
 - if flash[:notice]
   = flash[:notice]
@@ -16,7 +17,10 @@ p.intro
   = f.input :what_i_did
   = f.input :lesson_or_story
   = f.file_field :avatar
-  = f.button :submit 
+  = f.button :submit
+div.showposts
+  div.lesson
+  div.what_i_did
 
 
 / - @ageray.each do |year|
