@@ -14,12 +14,13 @@ br
 
 - if flash[:notice]
   = flash[:notice]
-= simple_form_for([@user, @year], validate: true) do |f|
-  = f.hidden_field :year
-  = f.input :what_i_did
-  = f.input :lesson_or_story
-  = f.file_field :avatar
-  = f.button :submit
+- if @user == current_user
+  = simple_form_for([@user, @year], validate: true) do |f|
+    = f.hidden_field :year
+    = f.input :what_i_did
+    = f.input :lesson_or_story
+    = f.file_field :avatar
+    = f.button :submit
 div.showposts
   div.lesson
   div.what_i_did

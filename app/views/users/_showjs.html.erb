@@ -1,11 +1,14 @@
-// <script>
+<script>
 $(document).ready(function() {
+  
 
   $('#year_year').val(gon.age);
-  $('.intro span').html(gon.age);
-  console.log(gon.posts);
-  $('div.what_i_did').html(gon.posts[0].what_i_did);
-  $('div.lesson').html(gon.posts[0].lesson_or_story);
+  $('.intro span').html(gon.currentyr);
+
+  if (gon.posts.length > 0) { 
+    $('div.what_i_did').html(gon.posts[0].what_i_did);
+    $('div.lesson').html(gon.posts[0].lesson_or_story);
+  }
 
   findContent(gon.currentyr);
   

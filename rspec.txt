@@ -79,11 +79,7 @@ end
 Method Example:
 ________________________
 
-1. We want to make a method called get_age_array that returns an array from 0 to the resuly of the my_age method:
-
-def my_age
-	3
-end
+1. We want to make a method called get_age_array that returns an array from 0 to the result of the get_month method.
 
 2. In File: app/spec/models/user_spec.rb
 describe "methods" do
@@ -97,20 +93,19 @@ end
 4. In File: app/models/user.rb
 << we add:
 def get_year_array
-  (0..my_age).to_a
+  (0..get_month).to_a
 end
 >>
 5. Watch it pass!
-
-((Note: since we are ONLY testing the get_year_array method, we can "stub out" other methods that get_year_array calls, such as my_age. Why? Because it could be an expensive call, or my_age could fail causing get_year_array to fail as well. ))
+WAIT! Let's say that the get_month method is in another class.  In this case, we can stub out that method, because we only care about testing the class on that method and because it could be an expensive call, or my_age could fail causing get_year_array to fail as well.
 
 The stubbed out version would look like: 
 
 describe "methods" do
 	it "should create and reverse an array of 0 to my age" do
 		user = User.new()
-    user.stub(:my_age).and_return(3)
+    user.stub(:get_month).and_return(3)
 		expect(user.get_year_array).to eq([0,1,2,3])
 	end
 end
-"user.stub(:my_age).and_return(3)" essentially says "any time the my_age method is called in rspec, just return 3"
+"user.stub(:get_month).and_return(3)" essentially says "any time the my_age method is called in rspec, just return 3"

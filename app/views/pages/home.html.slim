@@ -1,3 +1,8 @@
 h1 WordsBond
 = link_to "get started", signup_path, :class => 'btn btn-small get_started'
 
+p
+  - @users.each do |user| 
+    =<> link_to "#{user.name}" + ", #{user.age}", user_path(user)
+    br
+    
