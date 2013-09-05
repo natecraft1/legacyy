@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 	end
 	
 	def name
+		puts params[:age].to_i + 1
     gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
 		gon.age = @user.ageray[0]

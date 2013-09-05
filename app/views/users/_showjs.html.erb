@@ -1,4 +1,4 @@
-<script>
+// <script>
 $(document).ready(function() {
 
   $('#year_year').val(gon.age);
@@ -13,12 +13,16 @@ $(document).ready(function() {
     for (var i=0; i<gon.posts.length; i++) {
       if (gon.posts[i].year == value)
       {
+        // hide the form if there is content for the selected year
+        $('.new_year').hide();
         what_i_did = gon.posts[i].what_i_did;
         lesson_or_story = gon.posts[i].lesson_or_story;
         insertContent(what_i_did, lesson_or_story);
         break;
       }
       else {
+        // show form if there's no match
+        $('.new_year').show();
         $('.what_i_did').html('');
         $('.lesson').html('');
       }
@@ -30,11 +34,17 @@ $(document).ready(function() {
     $('.what_i_did').html(what);
     $('.lesson').html(lesson);
   }
-
+  // function arrowClick(value) {
+  //   $(".arrow").click(function(event) {
+  //     event.preventDefault();
+  //     //might need ajax call to get params
+  //   });
+  // }
   $(".year").click(function(event) {
     event.preventDefault();
     $('#year_year').val($(this).html());
     var val = $(this).html();
+
     console.log(val);
     // changes the sentence "this is me at..."
     $('.intro span').html(val);

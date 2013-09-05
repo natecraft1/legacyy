@@ -7,8 +7,11 @@ p.intro
        span<>
 - @user.ageray.each do |year|
   =<> link_to year.to_s, name_path(@user.name, year), class: 'year'
-  / = link_to year.to_s, '#', class: 'year'
-  / = ", "
+br
+/ p Add year 
+=<> link_to "<", name_path(@user.name, params[:age].to_i - 1), class: 'arrow'
+=<> link_to ">", name_path(@user.name, params[:age].to_i + 1), class: 'arrow'
+
 - if flash[:notice]
   = flash[:notice]
 = simple_form_for([@user, @year], validate: true) do |f|
