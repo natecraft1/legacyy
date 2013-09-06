@@ -5,22 +5,30 @@ class YearsController < ApplicationController
     puts "************************************ #{@user}"
 	end
 
-  def show
-    render :json
-  end
+  # def show
+  #   render :json
+  # end
+
   def create
-    user = User.find(params[:user_id])
+    user = User.find_by_name(params[:name])
+    puts "params === #{params}"
     year = Year.new(year_params)
     # year.id = params[:year][:year]
     user.years << year
 
     unless user.save
-     
       flash[:notice] = user.years.last.errors.full_messages[0]
     end
 
-    redirect_to user_path(user)
+    redirect_to name_path(user.name, params[:year][:year])
 
+  end
+
+  def edit
+    # @user = User.find_by_name(params[:name])
+    @params = params
+    puts "params = #{params}"
+    # @year = @user.years.find_by_year(params[:age])
   end
 
 	private

@@ -2,7 +2,7 @@ Wordsbond::Application.routes.draw do
 get 'home' => 'pages#home'
 root :to => 'pages#home'
 
-resources :users do
+resources :users, except: [:show] do
   resources :years
 end
 get 'signup' => 'users#new'
@@ -11,8 +11,8 @@ resources :sessions, only: [:new, :create, :destroy]
 get 'signin' => 'sessions#new'
 delete 'signout' => 'sessions#destroy'
 get '/:name(/:age)' => 'users#name', as: 'name'
-
-
+post '/:name(/:age)' => 'years#create'
+get '/:name(/:age)/edit' => 'years#edit', as: 'name_edit'
 
 
 

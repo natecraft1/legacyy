@@ -243,7 +243,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   launchy
-  paperclip
+  paperclip (~> 3.0)
   pg
   rabl
   rails (= 4.0.0)

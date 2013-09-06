@@ -26,23 +26,22 @@ class UsersController < ApplicationController
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
+
 		# @post = @user.years.all
 		render 'show'
 	end
 
 	def show
-    gon.currentyr = params[:age]
-
+    # gon.currentyr = val
+    
+    puts "params[:key] ==== #{params[:key]}"
 		@user = User.find(params[:id])
-   	puts "@user === #{@user.inspect}"
 
   	# @user = User.find_by_name(params[:name].capitalize)
   	gon.age = @user.ageray[0]
 		gon.username = @user.name.gsub(" ", "").downcase
 		@year = Year.new(:user => @user)
-
 		gon.posts = @user.years
-		puts "@user.years = #{@user.years.inspect}"
 
 	 #  @ageray.each do |year|
   #   	i =  @ageray.index(year)

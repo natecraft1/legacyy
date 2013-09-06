@@ -47,6 +47,10 @@ $(document).ready(function() {
     event.preventDefault();
     $('#year_year').val($(this).html());
     var val = $(this).html();
+    // this is how you send data to the backend...
+    // $.get('/users/' + "<%= params[:id] %>?key=" + val, function() {
+    //   console.log("sent");
+    // });
 
     console.log(val);
     // changes the sentence "this is me at..."
