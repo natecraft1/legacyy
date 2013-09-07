@@ -14,6 +14,7 @@ gem 'paperclip', "~> 3.0"
 gem 'uglifier', '>= 1.3.0'
 gem 'gon'
 gem 'rabl'
+gem 'awesome_print'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'

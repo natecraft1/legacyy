@@ -23,7 +23,14 @@ class YearsController < ApplicationController
     redirect_to name_path(user.name, params[:year][:year])
 
   end
-
+  def update
+    puts "params update ===> #{params}"
+    user = User.find_by_name(params[:name])
+    year = User.find_by_name(params[:name]).years.find_by_year(params[:age])
+    year.update_attributes(year_params)
+    redirect_to name_path(user.name, params[:year][:year])
+    
+  end
   def edit
     # @user = User.find_by_name(params[:name])
     @params = params

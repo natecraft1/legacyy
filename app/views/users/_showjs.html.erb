@@ -4,7 +4,7 @@ $(document).ready(function() {
 
   $('#year_year').val(gon.age);
   $('.intro span').html(gon.currentyr);
-
+  $('.edit_year').hide();
   if (gon.posts.length > 0) { 
     $('div.what_i_did').html(gon.posts[0].what_i_did);
     $('div.lesson').html(gon.posts[0].lesson_or_story);
@@ -18,6 +18,7 @@ $(document).ready(function() {
       {
         // hide the form if there is content for the selected year
         $('.new_year').hide();
+        $('.edit').show();
         what_i_did = gon.posts[i].what_i_did;
         lesson_or_story = gon.posts[i].lesson_or_story;
         insertContent(what_i_did, lesson_or_story);
@@ -25,6 +26,7 @@ $(document).ready(function() {
       }
       else {
         // show form if there's no match
+        $('.edit').hide();
         $('.new_year').show();
         $('.what_i_did').html('');
         $('.lesson').html('');
@@ -43,14 +45,20 @@ $(document).ready(function() {
   //     //might need ajax call to get params
   //   });
   // }
+  $('.edit').click(function() {
+    $('.edit_year').toggle('slow', function() {      
+    });
+    $('.edit_year').val("Update year");
+    return false;
+  });
   $(".year").click(function(event) {
     event.preventDefault();
     $('#year_year').val($(this).html());
     var val = $(this).html();
     // this is how you send data to the backend...
-    // $.get('/users/' + "<%= params[:id] %>?key=" + val, function() {
-    //   console.log("sent");
-    // });
+    $.get( "/<%= @user.name %>/" + val, function(data) {
+      console.log(data);
+    });
 
     console.log(val);
     // changes the sentence "this is me at..."

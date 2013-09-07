@@ -12,7 +12,7 @@ get 'signin' => 'sessions#new'
 delete 'signout' => 'sessions#destroy'
 get '/:name(/:age)' => 'users#name', as: 'name'
 post '/:name(/:age)' => 'years#create'
-get '/:name(/:age)/edit' => 'years#edit', as: 'name_edit'
+put '/:name(/:age)/edit' => 'years#update', as: 'name_edit'
 
 
 

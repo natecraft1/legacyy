@@ -3,6 +3,9 @@ FactoryGirl.define do
 	sequence :email do |n|
 		"person#{n}@email.com"
 	end
+  sequence :what_i_did do |w|
+    "what i did #{w}"
+  end
   factory :user do
     name     "nathan"	
     email    { generate(:email) }

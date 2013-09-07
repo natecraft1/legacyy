@@ -21,6 +21,13 @@ class UsersController < ApplicationController
 	def name
     gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
+		puts "params ===> #{params[:age]}"
+		# if @user.years.find_by_year(params[:age])
+		@currentyr = @user.years.find_by_year(params[:age])
+		# end
+  	# @currentyr = @user.years.find_by_year(params[:age].to_i)
+
+
 		gon.age = @user.ageray[0]
 		gon.username = @user.name.gsub(" ", "").downcase
 		@year = Year.new(:user => @user)
@@ -33,7 +40,6 @@ class UsersController < ApplicationController
 
 	def show
     # gon.currentyr = val
-    
     puts "params[:key] ==== #{params[:key]}"
 		@user = User.find(params[:id])
 

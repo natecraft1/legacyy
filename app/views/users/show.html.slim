@@ -11,15 +11,25 @@ br
 / p Add year 
 =<> link_to "<", name_path(@user.name, params[:age].to_i - 1), class: 'arrow'
 =<> link_to ">", name_path(@user.name, params[:age].to_i + 1), class: 'arrow'
-- if params[:age]
-  div = link_to "Edit this year", name_edit_path(@user, params[:age]), class: 'edit'
+
+div = link_to "Edit this year", '#', class: 'edit'
+
 / - else
   / div = link_to "Edit this year", edit_user_year_path(@user, ]), class: 'edit'
 
 - if flash[:notice]
   = flash[:notice]
 - if @user == current_user
+  div.add_year
   = simple_form_for(@year, url: name_path(@user.name, params[:age].to_i), validate: true) do |f|
+    = f.hidden_field :year
+    = f.input :what_i_did
+    = f.input :lesson_or_story
+    = f.file_field :avatar
+    = f.button :submit, class: 'create_year'
+- if @user == current_user && @currentyr
+  div.edit_year
+  = simple_form_for(@currentyr, url: name_edit_path(@user.name, params[:age].to_i), validate: true, method: 'put') do |f|
     = f.hidden_field :year
     = f.input :what_i_did
     = f.input :lesson_or_story
