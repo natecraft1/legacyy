@@ -23,8 +23,11 @@ class UsersController < ApplicationController
 		@user = User.find_by_name(params[:name])
 		puts "params ===> #{params[:age]}"
 		# if @user.years.find_by_year(params[:age])
-		@currentyr = @user.years.find_by_year(params[:age])
-		# end
+		if @user.years.find_by_year(params[:age])
+			@currentyr = @user.years.find_by_year(params[:age])
+		else
+			@currentyr = @user.years.first
+		end
   	# @currentyr = @user.years.find_by_year(params[:age].to_i)
 
 

@@ -2,13 +2,17 @@
 $(document).ready(function() {
   
 
-  $('#year_year').val(gon.age);
+  $('#year_year').val(gon.currentyr);
   $('.intro span').html(gon.currentyr);
   $('.edit_year').hide();
   if (gon.posts.length > 0) { 
     $('div.what_i_did').html(gon.posts[0].what_i_did);
     $('div.lesson').html(gon.posts[0].lesson_or_story);
   }
+
+  // $.post( "/<%= @user.name %>/" + val, { page: val } function() {
+  //     console.log("sent");
+  // });
 
   findContent(gon.currentyr);
   
@@ -54,11 +58,19 @@ $(document).ready(function() {
   $(".year").click(function(event) {
     event.preventDefault();
     $('#year_year').val($(this).html());
+    $('#edit_year_hidden').val($(this).html());
+
     var val = $(this).html();
     // this is how you send data to the backend...
     $.get( "/<%= @user.name %>/" + val, function(data) {
-      console.log(data);
+      console.log("get" + val);
     });
+    // $.ajax( 
+    //   url: "/<%= @user.name %>/" + val + "/edit", 
+    //   type: "PUT",
+    //   data:
+    // );
+    
 
     console.log(val);
     // changes the sentence "this is me at..."

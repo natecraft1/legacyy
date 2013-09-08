@@ -8,4 +8,5 @@ class Year < ActiveRecord::Base
       errors[:base] << "At least one field must be present"
     end
   end
+ 
 end
