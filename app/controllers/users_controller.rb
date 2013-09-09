@@ -7,10 +7,9 @@ class UsersController < ApplicationController
 
 		@user = User.new(user_params)
 
-
 		if @user.save
 			sign_in @user
-			render 'name', params: @user
+		  render name_path(@user.name, @user.age)
 		else
 			render 'new'
 		end
@@ -20,11 +19,12 @@ class UsersController < ApplicationController
     gon.currentyr = params[:age]
     # gon.image_style = "300x300>"
 		@user = User.find_by_name(params[:name])
+		puts "@user.name ===> #{@user.name}"
+
     gon.ageray = @user.ageray.reverse!
 
     @years_true = !@user.years.find_by_year(params[:age]).nil?
 
-		puts "params ===> #{params[:age]}"
 		if @user.years.find_by_year(params[:age])
 			@currentyr = @user.years.find_by_year(params[:age])
 		else 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
 
 		gon.age = @user.ageray[0]
-		gon.username = @user.name.gsub(" ", "").downcase
+		gon.username = @user.name
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
 
   	# @user = User.find_by_name(params[:name].capitalize)
   	gon.age = @user.ageray[0]
-		gon.username = @user.name.gsub(" ", "").downcase
+		gon.username = @user.name
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
