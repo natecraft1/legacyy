@@ -4,10 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Rails Bootstrap" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Rails Bootstrap" %>">
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
     <%= include_gon %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application", "rails.validations" %>
     <%= csrf_meta_tags %>
+    <%= render 'layouts/showjs' %>
   </head>
   <body>
     <header class="navbar navbar-fixed-top">
@@ -22,7 +25,9 @@
         <div class="content">
            <div class="row">
             <div class="span12">
+             
               <%= yield %>
+             
             </div>
           </div>
           <footer>

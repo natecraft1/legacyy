@@ -20,6 +20,8 @@ class UsersController < ApplicationController
     gon.currentyr = params[:age]
     # gon.image_style = "300x300>"
 		@user = User.find_by_name(params[:name])
+    gon.ageray = @user.ageray.reverse!
+
     @years_true = !@user.years.find_by_year(params[:age]).nil?
 
 		puts "params ===> #{params[:age]}"
@@ -52,10 +54,10 @@ class UsersController < ApplicationController
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
-	  @ageray.each do |year|
-    	i =  @ageray.index(year)
-    	range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
-  	end
+	  # @ageray.each do |year|
+   #  	i =  @ageray.index(year)
+   #  	range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
+  	# end
 
 	end
 

@@ -1,10 +1,10 @@
-= render 'showjs'
 title = @user.name
 p.intro 
        | This is me, #{@user.name}, at
        span<>
+svg
 - @user.ageray.each do |year|
-  =<> link_to year.to_s, name_path(@user.name, year), class: 'year'
+  =<> link_to year.to_s, '#', class: 'year'
 br
 / p Add year 
 =<> link_to "<", name_path(@user.name, params[:age].to_i - 1), class: 'arrow'
