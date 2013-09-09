@@ -23,7 +23,6 @@ $(document).ready(function() {
       if (gon.posts[i].year == value)
       {
         // hide the form if there is content for the selected year
-        // $('.avatar').html("<%= image_tag @currentyr.avatar.url %>");
 
         $('.new_year').hide();
         $('.edit').show();
@@ -35,10 +34,10 @@ $(document).ready(function() {
           type: "GET",
           dataType: 'json',
           success: function(data) {
-            console.log(data);
+            // $('body').attr("background-image", url( data.avatar_url ));
             $(".edit_year > .year_what_i_did > .controls > #year_what_i_did").val(data.what_i_did);
             $(".edit_year > .year_lesson_or_story > .controls > #year_lesson_or_story").val(data.lesson_or_story);
-            $(".avatar").attr("src", data.avatar_url);
+            $(".avatar").attr("src", data.avatar_url).width('300px');
             console.log('this is the image url');
             console.log( data.avatar_url);
 
@@ -48,6 +47,7 @@ $(document).ready(function() {
       }
       else {
         // show form if there's no match
+        $('.avatar').attr("src", '');
         $('.avatar').html("");
         $('.edit').hide();
         $('.edit_year').hide();
@@ -79,8 +79,6 @@ $(document).ready(function() {
     event.preventDefault();
     $('#year_year').val($(this).html());
     $('#edit_year_hidden').val($(this).html());
-    // var url = "<%= @currentyr.avatar.url %>"
-    // console.log("<%= @currentyr.inspect %>")
     // console.log(url);
     // $(".avatar").html("<img src ='" + url + "'>");
     var val = $(this).html();

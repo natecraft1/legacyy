@@ -10,21 +10,20 @@ class UsersController < ApplicationController
 
 		if @user.save
 			sign_in @user
-			redirect_to(@user)
+			render 'name', params: @user
 		else
 			render 'new'
 		end
-
 	end
 	
 	def name
     gon.currentyr = params[:age]
+    # gon.image_style = "300x300>"
 		@user = User.find_by_name(params[:name])
 		puts "params ===> #{params[:age]}"
 		if @user.years.find_by_year(params[:age])
 			@currentyr = @user.years.find_by_year(params[:age])
-		else
-			@currentyr = @user.years.first
+		
 		end
   	# @currentyr = @user.years.find_by_year(params[:age].to_i)
 
