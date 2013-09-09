@@ -29,7 +29,7 @@ class YearsController < ApplicationController
   end
   def update
     # gon.age_on_reload = params[]
-        puts "params update ===> #{params}"
+    puts "params update ===> #{params}"
     user = User.find_by_name(params[:name])
 
     @currentyr = user.years.find_by_year(params[:year][:year])

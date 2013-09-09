@@ -7,6 +7,7 @@ $(document).ready(function() {
 
   $('.intro span').html(gon.currentyr);
   $('.edit_year').hide();
+  
   if (gon.posts.length > 0) { 
     $('div.what_i_did').html(gon.posts[0].what_i_did);
     $('div.lesson').html(gon.posts[0].lesson_or_story);
@@ -23,7 +24,7 @@ $(document).ready(function() {
       if (gon.posts[i].year == value)
       {
         // hide the form if there is content for the selected year
-        $('.lesson').attr('margin-left', Math.random)
+        // $('.lesson').css('margin-left', function() { return Math.random()*document.width});
         $('.new_year').hide();
         $('.edit').show();
         what_i_did = gon.posts[i].what_i_did;
@@ -78,9 +79,16 @@ $(document).ready(function() {
     event.preventDefault();
     $('#year_year').val($(this).html());
     $('#edit_year_hidden').val($(this).html());
+
     // console.log(url);
     // $(".avatar").html("<img src ='" + url + "'>");
     var val = $(this).html();
+    $('.edit_year').attr('action', "/<%= @user.name %>/" + val + "/edit" );
+    $('.edit_year > #edit_year_what_i_did').attr("name", "year[what_i_did]");
+    $('.edit_year >  #edit_year_lesson_or_story').attr("name", "year[lesson_or_story]");
+    $('.edit_year >  #edit_year_avatar').attr("name", "year[avatar]");
+    $('.edit_year >  #edit_year_hidden').attr("name", "year[year]");   
+
     // this is how you send data to the backend...
     $.get( "/<%= @user.name %>/" + val, function(data) {
       console.log("get" + val);

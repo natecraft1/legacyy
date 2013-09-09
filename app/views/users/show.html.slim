@@ -26,10 +26,10 @@ br
     = f.text_area :lesson_or_story
     = f.file_field :avatar
     = f.button :submit, class: 'create_year'
-- if @user == current_user && @years_true
+- if @user == current_user
   = link_to "Edit this year", '#', class: 'edit'
   div.edit_year
-  = simple_form_for(@currentyr, url: name_edit_path(@user.name, params[:age].to_i), validate: true, method: 'put', :html => { :multipart => true }) do |f|
+  = simple_form_for(@currentyr, url: name_edit_path(@user.name, params[:age].to_i), method: 'put', :html => { :multipart => true }) do |f|
     = f.hidden_field :year, id: 'edit_year_hidden'
     = f.text_area :what_i_did
     <br>

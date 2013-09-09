@@ -20,12 +20,13 @@ class UsersController < ApplicationController
     gon.currentyr = params[:age]
     # gon.image_style = "300x300>"
 		@user = User.find_by_name(params[:name])
-    @years_true = @user.years.find_by_year(params[:year]).nil?
+    @years_true = !@user.years.find_by_year(params[:age]).nil?
 
 		puts "params ===> #{params[:age]}"
 		if @user.years.find_by_year(params[:age])
 			@currentyr = @user.years.find_by_year(params[:age])
-		
+		else 
+			@currentyr = :edit_year
 		end
   	# @currentyr = @user.years.find_by_year(params[:age].to_i)
 
