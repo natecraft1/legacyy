@@ -18,35 +18,46 @@ $(document).ready(function() {
   // });
 
   findContent(gon.currentyr);
+  console.log(gon.currentyr);
   
   function findContent(value) {  
-    for (var i=0; i<gon.posts.length; i++) {
-      if (gon.posts[i].year == value)
-      {
-        // hide the form if there is content for the selected year
-        // $('.lesson').css('margin-left', function() { return Math.random()*document.width});
-        $('.new_year').hide();
-        $('.edit').show();
-        what_i_did = gon.posts[i].what_i_did;
-        lesson_or_story = gon.posts[i].lesson_or_story;
-        insertContent(what_i_did, lesson_or_story);
-        $.ajax({ 
+    $.ajax({ 
           url: "/users/<%= @user.name %>/years/" + value, 
           type: "GET",
           dataType: 'json',
           success: function(data) {
             $('body').css("background", "url(" + data.avatar_url + ") no-repeat fixed").css("background-size", "100% auto");  
-            $(".edit_year > .year_what_i_did > .controls > #year_what_i_did").val(data.what_i_did);
-            $(".edit_year > .year_lesson_or_story > .controls > #year_lesson_or_story").val(data.lesson_or_story);
+            $("#edit_year_what_i_did").val(data.what_i_did);
+            $("#edit_year_lesson_or_story").val(data.lesson_or_story);
+            $('.lesson').css('margin-left', Math.random()* 600);
             console.log('this is the image url');
             console.log( data.avatar_url);
 
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log("error");
           }
         });
+    for (var i=0; i<gon.posts.length; i++) {
+      if (gon.posts[i].year == value)
+      {
+        // hide the form if there is content for the selected year
+        // $('.lesson').css('margin-left', function() { return Math.random()*document.width});
+        $('.what_i_did').show();
+        $('.lesson').show();
+        $('.new_year').hide();
+        $('.edit').show();
+        what_i_did = gon.posts[i].what_i_did;
+        lesson_or_story = gon.posts[i].lesson_or_story;
+        insertContent(what_i_did, lesson_or_story);
+        
         break;
       }
       else {
         // show form if there's no match
+        $('body').css("background", '');
+        $('.lesson').hide();
+        $('.what_i_did').hide();
         $('.avatar').attr("src", '');
         $('.avatar').html("");
         $('.edit').hide();
