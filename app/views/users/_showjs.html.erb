@@ -23,7 +23,7 @@ $(document).ready(function() {
       if (gon.posts[i].year == value)
       {
         // hide the form if there is content for the selected year
-
+        $('.lesson').attr('margin-left', Math.random)
         $('.new_year').hide();
         $('.edit').show();
         what_i_did = gon.posts[i].what_i_did;
@@ -34,10 +34,9 @@ $(document).ready(function() {
           type: "GET",
           dataType: 'json',
           success: function(data) {
-            // $('body').attr("background-image", url( data.avatar_url ));
+            $('body').css("background", "url(" + data.avatar_url + ") no-repeat fixed").css("background-size", "100% auto");  
             $(".edit_year > .year_what_i_did > .controls > #year_what_i_did").val(data.what_i_did);
             $(".edit_year > .year_lesson_or_story > .controls > #year_lesson_or_story").val(data.lesson_or_story);
-            $(".avatar").attr("src", data.avatar_url).width('300px');
             console.log('this is the image url');
             console.log( data.avatar_url);
 
