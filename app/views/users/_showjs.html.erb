@@ -29,7 +29,9 @@ $(document).ready(function() {
             $('body').css("background", "url(" + data.avatar_url + ") no-repeat fixed").css("background-size", "100% auto");  
             $("#edit_year_what_i_did").val(data.what_i_did);
             $("#edit_year_lesson_or_story").val(data.lesson_or_story);
-            $('.lesson').css('margin-left', Math.random()* 600);
+            $('.lesson').css('margin-left', Math.random()*(document.width - 430) + 50);
+            $('.what_i_did').css('margin-left', Math.random()*(document.width - 430) + 50);
+
             console.log('this is the image url');
             console.log( data.avatar_url);
 

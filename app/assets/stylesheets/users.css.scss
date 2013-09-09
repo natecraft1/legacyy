@@ -1,8 +1,26 @@
 .lesson, .what_i_did {
-	background-color: rgba(230, 230, 230, .3);
-	width:300px;
+	width: 300px;
 	border-radius: 10px;
 	margin: 20px;
 	padding: 15px;
 	border: solid 1px rgba(230, 230, 230, .4); 
+}
+.lesson {
+	background-color: rgba(230, 230, 230, .3);
+}
+.what_i_did {
+	background-color: rgba(40, 122, 252, .2);
+
+}
+.left {
+	margin-top: 10px;
+  font-size: 17px;
+  font-family: "Georgia";
+
+}
+a {
+	margin-right: 10px;
+}
+.intro {
+	font-size: 35px;
 }
