@@ -3,6 +3,8 @@ $(document).ready(function() {
   
 
   $('#year_year').val(gon.currentyr);
+  $('#edit_year_hidden').val("<%= params[:age] %>");
+
   $('.intro span').html(gon.currentyr);
   $('.edit_year').hide();
   if (gon.posts.length > 0) { 
@@ -21,16 +23,34 @@ $(document).ready(function() {
       if (gon.posts[i].year == value)
       {
         // hide the form if there is content for the selected year
+        // $('.avatar').html("<%= image_tag @currentyr.avatar.url %>");
+
         $('.new_year').hide();
         $('.edit').show();
         what_i_did = gon.posts[i].what_i_did;
         lesson_or_story = gon.posts[i].lesson_or_story;
         insertContent(what_i_did, lesson_or_story);
+        $.ajax({ 
+          url: "/users/<%= @user.name %>/years/" + value, 
+          type: "GET",
+          dataType: 'json',
+          success: function(data) {
+            console.log(data);
+            $(".edit_year > .year_what_i_did > .controls > #year_what_i_did").val(data.what_i_did);
+            $(".edit_year > .year_lesson_or_story > .controls > #year_lesson_or_story").val(data.lesson_or_story);
+            $(".avatar").attr("src", data.avatar_url);
+            console.log('this is the image url');
+            console.log( data.avatar_url);
+
+          }
+        });
         break;
       }
       else {
         // show form if there's no match
+        $('.avatar').html("");
         $('.edit').hide();
+        $('.edit_year').hide();
         $('.new_year').show();
         $('.what_i_did').html('');
         $('.lesson').html('');
@@ -59,17 +79,17 @@ $(document).ready(function() {
     event.preventDefault();
     $('#year_year').val($(this).html());
     $('#edit_year_hidden').val($(this).html());
-
+    // var url = "<%= @currentyr.avatar.url %>"
+    // console.log("<%= @currentyr.inspect %>")
+    // console.log(url);
+    // $(".avatar").html("<img src ='" + url + "'>");
     var val = $(this).html();
     // this is how you send data to the backend...
     $.get( "/<%= @user.name %>/" + val, function(data) {
       console.log("get" + val);
     });
-    // $.ajax( 
-    //   url: "/<%= @user.name %>/" + val + "/edit", 
-    //   type: "PUT",
-    //   data:
-    // );
+
+    
     
 
     console.log(val);

@@ -21,23 +21,27 @@ div = link_to "Edit this year", '#', class: 'edit'
   = flash[:notice]
 - if @user == current_user
   div.add_year
-  = simple_form_for(@year, url: name_path(@user.name, params[:age].to_i), validate: true) do |f|
+  = simple_form_for(@year, url: name_path(@user.name, params[:age].to_i), validate: true, :html => { :multipart => true }) do |f|
     = f.hidden_field :year
-    = f.input :what_i_did
-    = f.input :lesson_or_story
+    = f.text_area :what_i_did
+    <br>
+    = f.text_area :lesson_or_story
     = f.file_field :avatar
     = f.button :submit, class: 'create_year'
 - if @user == current_user && @currentyr
   div.edit_year
-  = simple_form_for(@currentyr, url: name_edit_path(@user.name, params[:age].to_i), validate: true, method: 'put') do |f|
+  = simple_form_for(@currentyr, url: name_edit_path(@user.name, params[:age].to_i), validate: true, method: 'put', :html => { :multipart => true }) do |f|
     = f.hidden_field :year, id: 'edit_year_hidden'
-    = f.input :what_i_did
-    = f.input :lesson_or_story
+    = f.text_area :what_i_did
+    <br>
+    = f.text_area :lesson_or_story
     = f.file_field :avatar
     = f.button :submit
 div.showposts
   div.lesson
   div.what_i_did
+  div.avatar_container
+  = image_tag @currentyr.avatar.url, class: 'avatar'
 
 
 / - @ageray.each do |year|

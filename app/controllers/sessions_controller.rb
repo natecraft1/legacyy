@@ -4,7 +4,7 @@ def new
 end
 
 def create
-	puts "session create params === #{params}"
+	puts "session create params === #{session.inspect}"
 	user = User.find_by_email(params[:session][:email].downcase)
 	if user && user.authenticate(params[:session][:password])
 		sign_in user

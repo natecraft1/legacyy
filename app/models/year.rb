@@ -1,6 +1,6 @@
 class Year < ActiveRecord::Base
 	belongs_to :user
-	has_attached_file :avatar
+	has_attached_file :avatar, :default_url => "/assets/missing.png"
   validate :any_present?
 
   def any_present?
@@ -8,5 +8,5 @@ class Year < ActiveRecord::Base
       errors[:base] << "At least one field must be present"
     end
   end
- 
+
 end

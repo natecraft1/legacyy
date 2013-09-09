@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-	
 	def new
 		@user = User.new
 	end
@@ -22,7 +21,6 @@ class UsersController < ApplicationController
     gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
 		puts "params ===> #{params[:age]}"
-		# if @user.years.find_by_year(params[:age])
 		if @user.years.find_by_year(params[:age])
 			@currentyr = @user.years.find_by_year(params[:age])
 		else
@@ -42,7 +40,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-    # gon.currentyr = val
+    gon.currentyr = val
     puts "params[:key] ==== #{params[:key]}"
 		@user = User.find(params[:id])
 
@@ -52,10 +50,10 @@ class UsersController < ApplicationController
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
-	 #  @ageray.each do |year|
-  #   	i =  @ageray.index(year)
-  #   	range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
-  # 	end
+	  @ageray.each do |year|
+    	i =  @ageray.index(year)
+    	range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
+  	end
 
 	end
 
