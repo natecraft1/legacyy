@@ -20,12 +20,16 @@
 }
 a {
 	margin-right: 10px;
+	cursor: pointer;
 }
 .intro {
 	font-size: 35px;
 	color: #2E262E;
 }
-.year {
-/*	font: italic bold 'Arial';
-*/
+.edit_link {
+  background-color: rgba(235, 213, 221, .3);
+  display: inline-block;
+  border-radius: 5px;
+
 }
+
