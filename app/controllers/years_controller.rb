@@ -6,10 +6,17 @@ class YearsController < ApplicationController
 	end
 
   def show
-    @year = User.find_by_name(params[:user_id]).years.find_by_year(params[:id])
-    @year_subset = { what_i_did: @year.what_i_did, lesson_or_story: @year.lesson_or_story, year: @year.year, avatar_url: @year.avatar.url }
+    # if !@user.find_by_name(params[:user_id]).years.nil? 
+      @year = User.find_by_name(params[:user_id]).years.find_by_year(params[:id])
+      @year_subset = { what_i_did: @year.what_i_did, lesson_or_story: @year.lesson_or_story, year: @year.year, avatar_url: @year.avatar.url }
+    # else 
+    #   respond_to do |format|
+    #     format.html { render :nothing => true }
+    #     format.json { render :nothing => true }
+    #   end
+    # end
     respond_to do |format|
-      format.html {render :nothing => true }
+      format.html { render :nothing => true }
       format.json { render :json => @year_subset }
     end
   end
