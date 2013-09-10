@@ -26,9 +26,9 @@ br
   div.edit_year
   = simple_form_for(@currentyr, url: name_edit_path(@user.name, params[:age].to_i), method: 'put', :html => { :multipart => true }) do |f|
     = f.hidden_field :year, id: 'edit_year_hidden'
-    = f.text_area :what_i_did
+    = f.text_area :what_i_did, id: 'edit_year_what_i_did'
     <br>
-    = f.text_area :lesson_or_story
+    = f.text_area :lesson_or_story, id: 'edit_year_lesson_or_story'
     = f.file_field :avatar
     = f.button :submit
 
