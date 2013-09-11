@@ -2,13 +2,17 @@
 title = @user.name
 p.intro 
        | This is me, #{@user.name}, at
-       span<
-       | .
+       span.yr<
+       | .  
+p.from_to 
+         | #{@user.monthborn}/
+         span.fullyr>
+         | - #{@user.monthborn}/
+         span.fullyrtwo
 svg
 
 br
 / p Add year 
-
 
 - if flash[:notice]
   = flash[:notice]

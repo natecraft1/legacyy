@@ -48,6 +48,19 @@ class User < ActiveRecord::Base
     dateborn ||= self.date_of_birth.to_s.gsub('-', '').scan(/..../)[1].to_i
 	end
 
+	def monthborn
+		arr = self.date_of_birth.to_s.split('-')
+		arr[1] << '/' << arr[2]
+	end
+
+	def whentil
+		yearnow - age
+	end
+	# what do i have?   
+	# the year someone clicks on
+	# what do i need?
+	# the year someone was born plus their age
+
 	private
 		def create_remember_token
 			self.remember_token = User.encrypt(User.new_remember_token)

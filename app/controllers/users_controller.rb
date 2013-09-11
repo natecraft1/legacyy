@@ -19,9 +19,11 @@ class UsersController < ApplicationController
     gon.currentyr = params[:age]
     # gon.image_style = "300x300>"
 		@user = User.find_by_name(params[:name])
-		puts "@user.name ===> #{gon.currentyr.class}"
+		puts "paramsage === #{params[:age]}"
 
     gon.ageray = @user.ageray.reverse!
+
+    gon.yearborn = @user.yearborn
 
     @years_true = !@user.years.find_by_year(params[:age]).nil?
 
