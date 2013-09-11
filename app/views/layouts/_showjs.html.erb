@@ -86,6 +86,8 @@ $(document).ready(function() {
 
   $('#year_year').val(gon.currentyr);
   $('#edit_year_hidden').val("<%= params[:age] %>");
+  $('span.fullyr').html(gon.yearborn + parseInt("<%= params[:age] %>"));
+  $('span.fullyrtwo').html(gon.yearborn + parseInt("<%= params[:age] %>") + 1);
 
   $('span.yr').html(gon.currentyr);
   $('.edit_year').hide();
