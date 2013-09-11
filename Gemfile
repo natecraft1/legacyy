@@ -15,6 +15,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'gon'
 gem 'rabl'
 gem 'awesome_print'
+gem 'figaro'
+
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
@@ -58,7 +60,7 @@ group :test do
 end
 group :production do
 	# gem "pg", "~> 0.16.0"
-	# gem 'rails_12factor', '0.0.2'
+	gem 'rails_12factor', '0.0.2'
 end
 
 # Use ActiveModel has_secure_password
