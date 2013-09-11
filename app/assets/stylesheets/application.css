@@ -11,3 +11,45 @@
  *= require_self
  *= require_tree .
  */
+.lesson, .what_i_did {
+	width: 400px;
+	border-radius: 10px;
+	margin: 20px;
+	padding: 20px;
+	font-weight: bold;
+	font-size: 17px;
+	border: solid 1px rgba(230, 230, 230, .4); 
+}
+.lesson {
+	color: rgb(72, 72, 72);
+	background-color: rgba(240, 225, 230, .8);
+}
+.what_i_did {
+	background-color: rgba(240, 225, 230, .7);
+	color: rgb(72, 72, 72);
+
+}
+.left {
+	margin-top: 10px;
+  font-size: 17px;
+  font-family: "Georgia";
+
+}
+a {
+	margin-right: 10px;
+	cursor: pointer;
+}
+.intro {
+	font-size: 35px;
+	color: #2E262E;
+}
+.edit_link {
+  background-color: rgba(235, 213, 221, .3);
+  display: inline-block;
+  border-radius: 5px;
+
+}
+.from_to {
+	font-size: 12px;
+}
+
