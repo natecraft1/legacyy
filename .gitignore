@@ -21,3 +21,4 @@ doc/
 /vendor/bundle
 # Ignore application configuration
 /config/application.yml
+/config/aws/yml
