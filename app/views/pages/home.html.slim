@@ -3,5 +3,5 @@ h1 WordsBond
 
 p
   - @users.each do |user| 
-    =<> link_to "#{user.name}" + ", #{user.age}", name_path(user.name)
+    =<> link_to "#{user.name}" + ", #{user.age}", name_path(user.name, user.age)
     br
