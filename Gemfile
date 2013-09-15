@@ -32,6 +32,7 @@ gem 'client_side_validations-simple_form', git: 'git://github.com/saveritemedica
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'bootstrap-sass'
+gem 'aws-s3'
 gem 'aws-sdk'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
