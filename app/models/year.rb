@@ -4,7 +4,7 @@ class Year < ActiveRecord::Base
 	# , :default_url => "/assets/missing.png",
 	# :storage => :s3,
  #  :s3_credentials => "#{Rails.root}/config/s3.yml",
-  :path => "wordsbond/:attachment/:id/:style.:extension",
+  :path => "wordsbond/:attachment/:id/:style.:extension"
   # :bucket => "legacyy"
   validate :any_present?
 
