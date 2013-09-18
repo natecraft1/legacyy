@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
 	validates :password, :confirmation => true
 	validates :date_of_birth, presence: true
 
-	
+# Login/Signup methods
+
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64
 	end
@@ -23,13 +24,13 @@ class User < ActiveRecord::Base
 	def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
 	end
-
+# Age methods
 	def age
     age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
   end
 
   def ageray
-    ageray ||= (0..age).to_a.reverse
+    ageray ||= (0..age).to_a
   end
 
 	def yearnow
@@ -56,10 +57,12 @@ class User < ActiveRecord::Base
 	def whentil
 		yearnow - age
 	end
-	# what do i have?   
-	# the year someone clicks on
-	# what do i need?
-	# the year someone was born plus their age
+
+# Year Controller Helpers
+
+	def self.find_user_year(user, year)
+  	find_by_name(user).years.find_by_year(year)
+  end
 
 	private
 		def create_remember_token

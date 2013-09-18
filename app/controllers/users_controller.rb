@@ -17,50 +17,23 @@ class UsersController < ApplicationController
 	
 	def name
     gon.currentyr = params[:age]
-    # gon.image_style = "300x300>"
 		@user = User.find_by_name(params[:name])
-		puts "paramsage === #{params[:age]}"
 
-    gon.ageray = @user.ageray.reverse!
+    gon.ageray = @user.ageray
 
     gon.yearborn = @user.yearborn
-
+# returns a boolean of whether or not there is a post for the url that is requested
+# if there is, fill in the background of the page and edit fields with their current values
     @years_true = !@user.years.find_by_year(params[:age]).nil?
 
-		if @user.years.find_by_year(params[:age])
-			@currentyr = @user.years.find_by_year(params[:age])
-		else 
-			@currentyr = :edit_year
-		end
-  	# @currentyr = @user.years.find_by_year(params[:age].to_i)
-
-
-		gon.age = @user.ageray[0]
+    @currentyr = User.find_user_year(params[:name], params[:age])
+   
 		gon.username = @user.name
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
 
 		# @post = @user.years.all
-		render 'show'
-	end
-
-	def show
-    gon.currentyr = val
-    puts "params[:key] ==== #{params[:key]}"
-		@user = User.find(params[:id])
-
-  	# @user = User.find_by_name(params[:name].capitalize)
-  	gon.age = @user.ageray[0]
-		gon.username = @user.name
-		@year = Year.new(:user => @user)
-		gon.posts = @user.years
-
-	  # @ageray.each do |year|
-   #  	i =  @ageray.index(year)
-   #  	range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
-  	# end
-
 	end
 
 	private

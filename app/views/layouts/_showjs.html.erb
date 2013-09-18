@@ -75,7 +75,6 @@ $(document).ready(function() {
 
 
   function colorChange() {
-    console.log("called");
     d3.selectAll('circle')
       .style('fill', '#3CCAFA');
     d3.select(circle)
@@ -106,16 +105,13 @@ $(document).ready(function() {
 
 
   function ajaxReq(value) {
-    console.log(value);
-    console.log('yoyo');
+
     <% if !@user.nil? %>
       $.ajax({ 
           url: "/users/<%= @user.name.gsub(' ', '%20') %>/years/" + value, 
           type: "GET",
           dataType: 'json',
-          success: function(data) {
-            console.log('$$$$$$$$$$$$$$$$$$$$4');
-            console.log(data);
+          success: function(data) {          
             $('body').css("background", "url(" + data.avatar_url + ") no-repeat fixed").css("background-size", "100% auto");  
             $("#edit_year_what_i_did").val(data.what_i_did);
             $("#edit_year_lesson_or_story").val(data.lesson_or_story);
