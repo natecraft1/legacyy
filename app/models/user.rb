@@ -56,10 +56,6 @@ class User < ActiveRecord::Base
 	def whentil
 		yearnow - age
 	end
-	# what do i have?   
-	# the year someone clicks on
-	# what do i need?
-	# the year someone was born plus their age
 
 	private
 		def create_remember_token

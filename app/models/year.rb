@@ -1,10 +1,10 @@
 class Year < ActiveRecord::Base
 	belongs_to :user
-	has_attached_file :avatar,
+	has_attached_file :avatar
 	# , :default_url => "/assets/missing.png",
 	# :storage => :s3,
  #  :s3_credentials => "#{Rails.root}/config/s3.yml",
-  path: "/:class/:attachment/:id_partition/:style/:filename"
+ # path: "/:class/:attachment/:id_partition/:style/:filename"
   # :bucket => "legacyy"
   validate :any_present?
 
