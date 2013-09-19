@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 	def name
     gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
+    puts "shortArray(params[:age]) = #{@user.shortArray(params[:age])}"
 
     gon.ageray = @user.ageray
 
@@ -27,13 +28,12 @@ class UsersController < ApplicationController
     @years_true = !@user.years.find_by_year(params[:age]).nil?
 
     @currentyr = User.find_user_year(params[:name], params[:age])
-   
+
+   	puts "@currentyr === #{@currentyr}"
 		gon.username = @user.name
 		@year = Year.new(:user => @user)
 		gon.posts = @user.years
 
-
-		# @post = @user.years.all
 	end
 
 	private

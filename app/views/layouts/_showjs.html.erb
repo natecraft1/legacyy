@@ -23,7 +23,7 @@ $(document).ready(function() {
     .data(yeardata)
     .enter()
     .append("circle")
-    // .attr('class', 'year')
+    .attr('class', 'circle')
     .style('fill', '#3CCAFA')
     .style('opacity', .3)
     .attr('cx', 20)
@@ -54,8 +54,7 @@ $(document).ready(function() {
       .transition()
       .duration(200)
       .attr('font-size', function(d) { return 45 })
-      .attr('opacity', .5)
-      .style('text-decoration', 'none');
+      .attr('opacity', .5);
       d3.select(circles[0][i])
       .style('fill', 'red');
     })
@@ -67,19 +66,20 @@ $(document).ready(function() {
       .attr('opacity', 1);
       d3.select(circles[0][i])
       .style('fill', '#3CCAFA');
-
-    }).transition()
+    })
+    .transition()
     .duration(1100)
     .attr('dx', function(d) { return d*space + 15.5 })
     .attr('dy', 34);
 
-
-  function colorChange() {
-    d3.selectAll('circle')
-      .style('fill', '#3CCAFA');
-    d3.select(circle)
-      .transition()
-      .duration(300)
+  // when the page loads, call colorBubble with the current params
+  colorBubble(gon.currentyr);
+  
+  function colorBubble(selectedAge) {
+    years = d3.selectAll('.year');
+    d3.select(years[0][selectedAge])
+      .attr('opacity', .5)
+    d3.select(circles[0][selectedAge])
       .style('fill', 'red');
   }
 
@@ -97,15 +97,16 @@ $(document).ready(function() {
   }
 
   findContent(gon.currentyr);
-  console.log(gon.currentyr);
 
+// if the page is refreshed and there IS a post for that year, ajax the data we'll display
   <% if @years_true %>
     ajaxReq(gon.currentyr);
   <% end %>
 
-
+// when don't we want to call this function? 
+// when there is not a year post for the year that is clicked 
   function ajaxReq(value) {
-
+    console.log(" ajaxreqcalled");
     <% if !@user.nil? %>
       $.ajax({ 
           url: "/users/<%= @user.name.gsub(' ', '%20') %>/years/" + value, 
@@ -130,14 +131,8 @@ $(document).ready(function() {
 
     // }
     for (var i=0; i<=gon.posts.length -1; i++) {
-      console.log(gon.posts[0]);
       if ((gon.posts.length !== 0) && (gon.posts[i].year == value))
       {
-        console.log("if");
-        // hide the form if there is content for the selected year
-        // $('.lesson').css('margin-left', function() { return Math.random()*document.width});
-        // $('.lesson').css('margin-left', Math.random()*(document.width - 430) + 50);
-        // $('.what_i_did').css('margin-left', Math.random()*(document.width - 430) + 50);
         $('.what_i_did').show();
         $('.lesson').show();
         $('.new_year').hide();
@@ -149,8 +144,6 @@ $(document).ready(function() {
         break;
       }
       else {
-        // show form if there's no match
-        console.log('else');
         $('body').css("background", '');
         $('.lesson').hide();
         $('.what_i_did').hide();
@@ -184,21 +177,19 @@ $(document).ready(function() {
   $(".year").click(function(event) {
     event.preventDefault();
 
-
-    d3.selectAll('circle')
-      .style('fill', '#3CCAFA');
-    d3.select(this)
-      .transition()
-      .duration(300)
-      .style('fill', 'red');
-
     $('#year_year').val($(this).text());
     $('#edit_year_hidden').val($(this).text());
 
     // console.log(url);
     // $(".avatar").html("<img src ='" + url + "'>");
     var val = $(this).text();
-    console.log('cal =' + val);
+    d3.selectAll('.year')
+     .attr('font-size', function(d) { return scale2(d) })
+     .attr('opacity', 1);
+    d3.selectAll('.circle')
+     .style('fill', '#3CCAFA');
+    
+    colorBubble(val);
 
     $('.edit_year').attr('action', "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val + "/edit" );
     $('.edit_year > #edit_year_what_i_did').attr("name", "year[what_i_did]");
@@ -206,15 +197,10 @@ $(document).ready(function() {
     $('.edit_year > #edit_year_avatar').attr("name", "year[avatar]");
     $('.edit_year > #edit_year_hidden').attr("name", "year[year]");   
 
-    // this is how you send data to the backend...
     $.get( "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val, function(data) {
-      console.log('hey');
     });
 
     
-    console.log(gon.yearborn);
-    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOo");
-    console.log(parseInt(val));
     // changes the sentence "this is me at..."
     $('span.yr').html(val);
     $('span.fullyr').html(gon.yearborn + parseInt(val));
@@ -224,7 +210,6 @@ $(document).ready(function() {
     findContent(val);
     ajaxReq(val);
 
-  
 
     history.replaceState({}, '', "/" + gon.username + '/' + val );
     return false;
