@@ -2,19 +2,11 @@ class YearsController < ApplicationController
  
 	def new
 		@year = Year.new
-    puts "************************************ #{@user}"
 	end
 
   def show
-    # if !@user.find_by_name(params[:user_id]).years.nil? 
-      @year = User.find_by_name(params[:user_id]).years.find_by_year(params[:id])
+      @year = User.find_user_year(params[:user_id], params[:id])
       @year_subset = { what_i_did: @year.what_i_did, lesson_or_story: @year.lesson_or_story, year: @year.year, avatar_url: @year.avatar.url }
-    # else 
-    #   respond_to do |format|
-    #     format.html { render :nothing => true }
-    #     format.json { render :nothing => true }
-    #   end
-    # end
     respond_to do |format|
       format.html { render :nothing => true }
       format.json { render :json => @year_subset }
@@ -23,9 +15,7 @@ class YearsController < ApplicationController
 
   def create
     user = User.find_by_name(params[:name])
-    puts "params === #{params}"
     year = Year.new(year_params)
-    # year.id = params[:year][:year]
     user.years << year
     unless user.save
       flash[:notice] = user.years.last.errors.full_messages[0]
@@ -35,20 +25,13 @@ class YearsController < ApplicationController
 
   end
   def update
-    # gon.age_on_reload = params[]
-    puts "params update ===> #{params}"
+    year = params[:year][:year]
     user = User.find_by_name(params[:name])
-
-    @currentyr = user.years.find_by_year(params[:year][:year])
+    @currentyr = user.years.find_by_year(year)
     @currentyr.update_attributes(year_params)
-    redirect_to name_path(user.name, params[:year][:year])
     
-  end
-  def edit
-    # @user = User.find_by_name(params[:name])
-    @params = params
-    puts "params = #{params}"
-    # @year = @user.years.find_by_year(params[:age])
+    redirect_to name_path(user.name, year)
+    
   end
 
 	private

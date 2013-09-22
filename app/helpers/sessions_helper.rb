@@ -26,15 +26,4 @@ module SessionsHelper
     cookies.delete(:remember_token)
   end
 
-
-
- 
-  # def about_me
-
-  #   User.ageray.each do |year|
-  #     i =  @ageray.index(year)
-  #     range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
-  #   end
-  # end
-
 end
