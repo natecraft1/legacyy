@@ -61,10 +61,8 @@ class User < ActiveRecord::Base
 # Helper for the short array 
 
   def shortArray(age)
-    ageray.each do |year|
-      i =  @ageray.index(year)
-      range =  i < 6 ? (@ageray[0]-10..@ageray[0]).to_a.reverse : (year-5..year+5).to_a.reverse
-    end
+    i = ageray.index(age.to_i)
+    range =  i < 6 ? (ageray[0]..ageray[10]).to_a : (i-5..i+5).to_a
   end
 
 # Year Controller Helpers

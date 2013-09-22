@@ -8,6 +8,7 @@ $(document).ready(function() {
 
 
   var yeardata = gon.ageray,
+    displayedYears = gon.shortArray,
     containerWidth = $('.span12').width(),
     svg = d3.select("svg").attr('height', 60),
     space = containerWidth/yeardata.length,
@@ -20,7 +21,7 @@ $(document).ready(function() {
 
   var svgcontainer = svg.append('g');
   var circles = svgcontainer.selectAll("circle")
-    .data(yeardata)
+    .data(gon.ageray)
     .enter()
     .append("circle")
     .attr('class', 'circle')
@@ -59,13 +60,16 @@ $(document).ready(function() {
       .style('fill', 'red');
     })
     .on("mouseout", function(d, i) {
-      d3.select(this)
-      .transition()
-      .duration(200)
-      .attr('font-size', function(d) { return scale2(d) })
-      .attr('opacity', 1);
-      d3.select(circles[0][i])
-      .style('fill', '#3CCAFA');
+      if (!$(this).is('#clicked')) {
+        console.log("doesnt have clicked id");
+        d3.select(this)
+        .transition()
+        .duration(200)
+        .attr('font-size', function(d) { return scale2(d) })
+        .attr('opacity', 1);
+        d3.select(circles[0][i])
+        .style('fill', '#3CCAFA');
+      }
     })
     .transition()
     .duration(1100)
@@ -76,9 +80,9 @@ $(document).ready(function() {
   colorBubble(gon.currentyr);
   
   function colorBubble(selectedAge) {
-    years = d3.selectAll('.year');
-    d3.select(years[0][selectedAge])
-      .attr('opacity', .5)
+    console.log('colorbub');
+    // d3.select('#clicked')
+    //   .attr('opacity', .5)
     d3.select(circles[0][selectedAge])
       .style('fill', 'red');
   }
@@ -112,7 +116,7 @@ $(document).ready(function() {
           url: "/users/<%= @user.name.gsub(' ', '%20') %>/years/" + value, 
           type: "GET",
           dataType: 'json',
-          success: function(data) {          
+          success: function(data) {     
             $('body').css("background", "url(" + data.avatar_url + ") no-repeat fixed").css("background-size", "100% auto");  
             $("#edit_year_what_i_did").val(data.what_i_did);
             $("#edit_year_lesson_or_story").val(data.lesson_or_story);
@@ -179,16 +183,18 @@ $(document).ready(function() {
 
     $('#year_year').val($(this).text());
     $('#edit_year_hidden').val($(this).text());
-
-    // console.log(url);
-    // $(".avatar").html("<img src ='" + url + "'>");
-    var val = $(this).text();
-    d3.selectAll('.year')
-     .attr('font-size', function(d) { return scale2(d) })
-     .attr('opacity', 1);
-    d3.selectAll('.circle')
-     .style('fill', '#3CCAFA');
     
+    var val = $(this).text();
+
+    d3.select('#clicked').attr("id", '');
+    d3.select(this).attr("id", "clicked");
+    // d3.select(this)
+    //  .attr('font-size', function(d) { return scale2(d) })
+    //  .attr('opacity', 1);
+    // d3.select(circles[0][val])
+    //  .style('fill', 'red');
+
+
     colorBubble(val);
 
     $('.edit_year').attr('action', "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val + "/edit" );
