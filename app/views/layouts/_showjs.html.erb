@@ -36,7 +36,9 @@ $(document).ready(function() {
               .domain([0, d3.max(displayedYears)])
               .range([-1,1]);
     circles = svgcontainer.selectAll("circle")
-    .data(displayedYears);
+    .data(data);
+    console.log(data);
+    console.log(displayedYears);
     circles.transition()
       .duration(600)
       .attr('r', function(d) { return scale(d); })
@@ -62,7 +64,7 @@ $(document).ready(function() {
       .attr("dx", function(d, i) { return i*space + 20 + space*4 });
 
     texts.enter().append('text')
-    .attr("class", "enter")
+    .attr("class", "year")
     .attr('dx', function(d, i) { return 0;})
     .attr('dy', 34)
     .attr("xlink:href", '#')
@@ -73,6 +75,7 @@ $(document).ready(function() {
     .attr('font-style', 'italic')
     .attr('fill', '#161738')
     .on("mouseover", function(d, i) {
+
       d3.select(this)
       .transition()
       .duration(200)
@@ -162,7 +165,6 @@ $(document).ready(function() {
       } 
     }
     else {
-      console.log(displayedYears);
       if (first_from_all === first) {
         return displayedYears;
       }
@@ -183,80 +185,10 @@ $(document).ready(function() {
     return displayedYears;
   }
 
-  // var yeardata = gon.ageray,
-  //   displayedYears = gon.shortArray,
-  //   containerWidth = $('.span12').width(),
-  //   svg = d3.select("svg").attr('height', 60),
-  //   space = containerWidth/yeardata.length,
-  //   scale = d3.scale.linear()
-  //             .domain([0, d3.max(yeardata)])
-  //             .range([9, 18]);
-  //   scale2 = d3.scale.linear()
-  //             .domain([0, d3.max(yeardata)])
-  //             .range([13, 18]);
-
-  // var svgcontainer = svg.append('g');
-  // var circles = svgcontainer.selectAll("circle")
-  //   .data(gon.ageray)
-  //   .enter()
-  //   .append("circle")
-  //   .attr('class', 'circle')
-  //   .style('fill', '#3CCAFA')
-  //   .style('opacity', .3)
-  //   .attr('cx', 20)
-  //   .attr('cy', 30)
-  //   .attr('r', function(d) { return scale(d); })
-  //   .transition()
-  //   .duration(1200)
-  //   .attr('cx', function(d) { return d*space + 20;})
-  //   .attr('cy', 30);
-
-  // var texts = svgcontainer.selectAll('text.year')
-  //   .data(yeardata).enter().append("svg:a")
-  //   .attr('class', 'year')
-  //   .append('text').text(function(d) { return d;})
-  //   // .attr('dx', function(d) { return d*space + 15.5 })
-  //   // .attr('dy', 34)
-  //   .attr('dx', function(d) { return Math.random()*containerWidth})
-  //   .attr('dy', function(d) { return Math.random()*containerWidth})
-  //   .attr("xlink:href", '#')
-  //   .attr('pointer-events', 'all')
-  //   .attr('font-size', function(d) { return scale2(d) })
-  //   .style('font-family', 'Arial')
-  //   .attr('font-weight', 'bold')
-  //   .attr('font-style', 'italic')
-  //   .attr('fill', '#161738')
-  //   .on("mouseover", function(d, i) {
-  //     d3.select(this)
-  //     .transition()
-  //     .duration(200)
-  //     .attr('font-size', function(d) { return 45 })
-  //     .attr('opacity', .5);
-  //     d3.select(circles[0][i])
-  //     .style('fill', 'red');
-  //   })
-  //   .on("mouseout", function(d, i) {
-  //     if (!$(this).is('#clicked')) {
-  //       console.log("doesnt have clicked id");
-  //       d3.select(this)
-  //       .transition()
-  //       .duration(200)
-  //       .attr('font-size', function(d) { return scale2(d) })
-  //       .attr('opacity', 1);
-  //       d3.select(circles[0][i])
-  //       .style('fill', '#3CCAFA');
-  //     }
-  //   })
-  //   .transition()
-  //   .duration(1100)
-  //   .attr('dx', function(d) { return d*space + 15.5 })
-  //   .attr('dy', 34);
-
   // when the page loads, call colorBubble with the current params
   colorBubble(gon.currentyr);
   
   function colorBubble(selectedAge) {
-    console.log('colorbub');
     // d3.select('#clicked')
     //   .attr('opacity', .5)
     d3.select(circles[0][selectedAge])
@@ -305,11 +237,7 @@ $(document).ready(function() {
     <% end %>
   }
   function findContent(value) {  
-    console.log("findcontent called");
-    console.log(gon.posts.length);
-    // if (gon.posts.length == 0) {
-
-    // }
+   
     for (var i=0; i<=gon.posts.length -1; i++) {
       if ((gon.posts.length !== 0) && (gon.posts[i].year == value))
       {
@@ -362,8 +290,8 @@ $(document).ready(function() {
     
     var val = $(this).text();
 
-    d3.select('#clicked').attr("id", '');
-    d3.select(this).attr("id", "clicked");
+    // d3.select('#clicked').attr("id", '');
+    // d3.select(this).attr("id", "clicked");
     // d3.select(this)
     //  .attr('font-size', function(d) { return scale2(d) })
     //  .attr('opacity', 1);
@@ -384,6 +312,7 @@ $(document).ready(function() {
 
     
     // changes the sentence "this is me at..."
+    
     $('span.yr').html(val);
     $('span.fullyr').html(gon.yearborn + parseInt(val));
     $('span.fullyrtwo').html(gon.yearborn + parseInt(val) + 1);
