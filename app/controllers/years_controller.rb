@@ -25,6 +25,7 @@ class YearsController < ApplicationController
 
   end
   def update
+    puts "params update === #{params}"
     year = params[:year][:year]
     user = User.find_by_name(params[:name])
     @currentyr = user.years.find_by_year(year)
