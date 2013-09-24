@@ -33,7 +33,9 @@ $(document).ready(function() {
     scale2 = d3.scale.linear()
               .domain([0, d3.max(yeardata)])
               .range([13, 18]);
-  console.log(displayedYears);
+    scale3 = d3.scale.linear()
+              .domain([0, d3.max(displayedYears)])
+              .range([-1,1]);
   
   var svgcontainer = svg.append('g');
   
@@ -65,19 +67,50 @@ $(document).ready(function() {
   update(displayedYears);
   
   function update(data) {
-    console.log("data = " +data);
-    d3.select('.clicked').attr('font-size', function(d) { return scale2(d) })
-      .attr("fill", "#161738")
-      .attr('opacity', 1);
-    scale3 = d3.scale.linear()
-              .domain([0, d3.max(displayedYears)])
-              .range([-1,1]);
+
+    // remove the clicked id from the previous clicked element and change it's color back to blue
+    d3.selectAll('circle').style('fill', '#3CCAFA');
+    d3.select("#clicked").attr("id", "");
+    d3.select("#clicked_circle")
+     .attr("id", "");
+
+    function mouseEffects() {
+      d3.select(this)
+       .on("mouseover", function(d, i) {
+        if (d3.select(this).attr("id") !== "clicked") { 
+          d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('font-size', function(d) { return 45 });
+
+          d3.select(circles[0][data.indexOf(d)])
+          .style('fill', 'red');
+        }
+       })
+      .on("mouseout", function(d, i) {
+        if (d3.select(this).attr("id") !== "clicked") { 
+          d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('font-size', function(d) { return scale2(d) });
+          
+          d3.select(circles[0][data.indexOf(d)])
+          .style('fill', '#3CCAFA');
+        }
+      });
+    }
+
+    console.log(d3.select('.clicked'));
+    // d3.select('.clicked').attr('font-size', function(d) { return scale2(d) })
+    //   .attr("fill", "#161738")
+    //   .attr('opacity', 1);
+
     circles = svgcontainer.selectAll("circle")
     .data(data);
-    console.log(data);
     circles.transition()
       .duration(600)
-      .attr('r', function(d) { return scale(d); })
+      .attr('r', function(d) { return scale(d); });
+
 
     circles.enter()
     .append("circle")
@@ -92,12 +125,19 @@ $(document).ready(function() {
     .attr('cx', function(d,i) { return i*space + 20 + space*4;})
     .attr('cy', 30);
 
+
     texts = svgcontainer.selectAll('text')
       .data(data, String);
     texts.attr("class","year")
     .transition()
       .duration(750)
-      .attr("dx", function(d, i) { return i*space + 20 + space*4 });
+      .attr("dx", function(d, i) { return i*space + 20 + space*4 })
+      .attr("fill", '#161738')
+      .attr('font-size', function(d) { 
+        return scale2(d);
+      })
+      .each("end", mouseEffects);
+
     texts.enter().append('text')
     .attr("class", "year")
     .attr('dx', function(d, i) { return 0;})
@@ -109,40 +149,30 @@ $(document).ready(function() {
     .attr('font-weight', 'bold')
     .attr('font-style', 'italic')
     .attr('fill', '#161738')
-    .on("mouseover", function(d, i) {
-      d3.select(this)
-      .transition()
-      .duration(200)
-      .attr('font-size', function(d) { return 45 })
-      .attr('opacity', .5);
-      d3.select(circles[0][data.indexOf(d)])
-      .style('fill', 'red');
-    })
-    .on("mouseout", function(d, i) {
-      if (d3.select(this).attr("class") === "year") { 
-        d3.select(this)
-        .transition()
-        .duration(200)
-        .attr('font-size', function(d) { return scale2(d) })
-        .attr('opacity', 1);
-        d3.select(circles[0][data.indexOf(d)])
-        .style('fill', '#3CCAFA');
-      }
-    })
     .on("click", function() {
       // d3.selectAll('.clicked').attr("class", "year");
-      value = parseInt(d3.select(this).text());
-          console.log(displayedYears);
-
+      var value = parseInt(d3.select(this).text());
+      // call function to highlight clicked item
+      
       update(setNewData(value));  
       d3.selectAll('.circle')
         .transition()
         .duration(800)
-        .attr('r', function(d) { 
-          return scale(d); 
-      });
+        .attr('r', function(d) { return scale(d); });
+
 
       var val = $(this).text();
+      
+      // highLight(value);
+   
+      // function highLight(value) {
+      //   console.log("claasing");
+      //   d3.select(texts[0][data.indexOf(value)]).attr("class", "clicked");
+      //   console.log(d3.select(texts[0][data.indexOf(value)]));
+
+      // }
+     
+
       $('span.yr').html(val);
       $('span.fullyr').html(gon.yearborn + parseInt(val));
       $('span.fullyrtwo').html(gon.yearborn + parseInt(val) + 1);
@@ -150,16 +180,12 @@ $(document).ready(function() {
       $('#edit_year_hidden').val($(this).text());
 
 
-      // remove the clicked class from the previous clicked element and change it's color back to blue
-      // d3.selectAll("text").select("[fill='#3CCAFA']")
-      //   .transition()
-      //   .duration(200)
-      //   .attr("fill", "#161738")
-      //   .attr("class", "year");
+
       // when you click a year, give it the clicked class and fill its bubble with red.
-      d3.select(texts[0][data.indexOf(parseInt(val))]).attr("class", "year clicked");
-      // .attr('font-size', function(d) { return scale2(d) })
-      //   .attr("fill", "#3CCAFA");
+      d3.select(texts[0][data.indexOf(value)]).attr("id", "clicked");
+      d3.select(circles[0][data.indexOf(value)]).attr("id", "clicked_circle")
+        .style("fill", 'red');
+
       // console.log(d3.selectAll(texts[0]));
       // colorBubble(val);
 
@@ -180,8 +206,13 @@ $(document).ready(function() {
     })
     .transition()
     .duration(700)
-    .attr('dx', function(d, i) { return i*space + 20 + space*4});
-
+    .attr('dx', function(d, i) { return i*space + 20 + space*4})
+    .each('start', function(d) { d3.selectAll("text").attr("class", "animating year"); })
+    .each('end', function(d) { 
+      d3.selectAll("text").attr("class", "year"); 
+      d3.select(texts[0][data.indexOf()]).attr("class", "clicked");
+    });
+    
     texts.text(function(d) { return d;});
 
     texts.exit()
@@ -190,6 +221,7 @@ $(document).ready(function() {
       .attr('dx', function(d, i) { return scale3(i)*space*10 + space*3 + 20;})
       .attr('opacity', .5)
       .remove();
+    
   }
 
   function setNewData(value) {
@@ -246,24 +278,6 @@ $(document).ready(function() {
           trimLeft(diff_abs);
         }
       }
-      // else { 
-      //   if (value <= diff_abs) {
-      //     if (first - first_from_all < value) {
-      //       trimLeft(first);
-      //     } 
-      //     else {
-      //       trimLeft(value);
-      //     }
-      //   }
-      //   else { 
-      //     if (diff_abs > max_shift_left) {
-      //       trimLeft(max_shift_left);
-      //     } 
-      //     else {
-      //       trimLeft(diff_abs);
-      //     }
-      //   }
-      // }
     } 
     return displayedYears;
   }

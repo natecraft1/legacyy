@@ -39,8 +39,16 @@ a {
 .from_to {
 	font-size: 12px;
 }
-#selected {
+#clicked {
 	font-size: 45px;
 
 }
 
+.animating {
+	pointer-events: none;
+}
+
+.year {
+	cursor: pointer;
+
+}
