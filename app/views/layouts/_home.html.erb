@@ -1,0 +1,109 @@
+<head>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+		ul li {
+			list-style: none;
+			overflow: hidden;
+			height: 400px;
+			position: relative;
+
+		}
+		.parallax-background {
+			height: 600px;
+		}
+		ul li .herro {
+			position: absolute;
+			top: 100px;
+			left: 100px;
+			color: white;
+			font-family: helvetica;
+
+		}
+		h1 {
+			font-size: 72px;
+			margin-bottom: 0;
+		}
+		
+	</style>
+</head>
+<body>
+	<ul class="parallax">
+	</ul>
+</body>
+<script type="text/javascript">
+function preloadImages(srcs, imgs, callback) {
+	console.log($(".span12").width()/4 - 60);
+  var img;
+  var remaining = srcs.length;
+  for (var i = 0; i < srcs.length; i++) {
+    img = new Image();
+    img.onload = function() {
+        --remaining;
+        if (remaining <= 0) {
+            callback(imgs);
+        }
+    };
+    img.src = srcs[i];
+    img.width = "280"; 
+    img.className = "home_img";
+    // + ((Math.random()*200 ) + 200);
+    console.log(img.width);
+    imgs.push(img);
+  }
+}
+function imagesReady(imgs) {
+	for (i=0; i<imgs.length; i++) {
+		$(".parallax").append("<li><div style='background-image:url(" + imgs[i].src + ")' class='parallax-background img" + i + "'></div><div class='herro'><h1>Herro Prease</h1></div></li>");
+		// $(".span12").append(imgs[i]);
+	}
+
+	// start parallaxing
+	var $container = $('.parallax');
+	var $divs = $container.find('div.parallax-background');
+	var scrolling = document.body;
+	var liHeight = $divs.eq(0).closest('li').height();
+	var diffHeight = $divs.eq(0).height() - liHeight;
+
+	var i, len, div, li, offset, scroll, top;
+	// loop through divs
+	var render = function() {
+		top = scrolling.scrollTop;
+		for(i=0,len=$divs.length; i<len; i++) {
+			
+			// get one div
+			div = $divs[i];
+			// calculate the offset top of the div
+			offset = $(div).offset().top;
+			// calculate the amount to scroll
+			scroll = Math.round(((top - offset)/liHeight) * diffHeight);
+			// apply the scroll amount
+			div.style.webkitTransform =  "translate3d(0px," + scroll + "px, 0px)"
+
+		}
+	};
+
+	(function loop() {
+		requestAnimationFrame(loop);
+		render();
+	})();
+
+}
+
+// then to call it, you would use this
+var imageSrcs = [];
+<% @image_array.each do |x| %>
+	imageSrcs.push("<%= x.avatar.url %>")
+<% end %>
+
+var images = [];
+
+preloadImages(imageSrcs, images, imagesReady);
+
+</script>

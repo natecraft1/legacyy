@@ -1,0 +1,47 @@
+<!-- <html>
+	<head>
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>
+
+  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
+  function preloadImages(srcs, imgs, callback) {
+	
+  var img;
+  var remaining = srcs.length;
+  for (var i = 0; i < srcs.length; i++) {
+    img = new Image();
+    img.onload = function() {
+        --remaining;
+        if (remaining <= 0) {
+            callback(imgs);
+        }
+    };
+    img.src = srcs[i];
+    img.width = "280"; 
+    img.className = "home_img";
+    // + ((Math.random()*200 ) + 200);
+    console.log(img.width);
+    imgs.push(img);
+  }
+}
+function myFunction(imgs) {
+	for (i=0; i<imgs.length; i++) {
+		$("body").append(imgs[i]);
+	}
+}
+
+// then to call it, you would use this
+var imageSrcs = ["../assets/slovenia.jpg"];
+
+
+var images = [];
+
+preloadImages(imageSrcs, images, myFunction);
+  </script>
+
+	</body>
+</html> -->

@@ -75,7 +75,7 @@ $(document).ready(function() {
      .attr("id", "");
 
     function mouseEffects() {
-      d3.select(this)
+      d3.selectAll('.year')
        .on("mouseover", function(d, i) {
         if (d3.select(this).attr("id") !== "clicked") { 
           d3.select(this)
@@ -93,7 +93,7 @@ $(document).ready(function() {
           .transition()
           .duration(200)
           .attr('font-size', function(d) { return scale2(d) });
-          
+
           d3.select(circles[0][data.indexOf(d)])
           .style('fill', '#3CCAFA');
         }
@@ -221,6 +221,8 @@ $(document).ready(function() {
       .attr('dx', function(d, i) { return scale3(i)*space*10 + space*3 + 20;})
       .attr('opacity', .5)
       .remove();
+
+    mouseEffects();
     
   }
 

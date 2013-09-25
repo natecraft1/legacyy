@@ -1,8 +1,8 @@
-h1 WordsBond
-= link_to "get started", signup_path, :class => 'btn btn-small get_started'
+= render 'layouts/home'
+/ h1 WordsBond
 
-p
-  - @users.each do |user| 
-    =<> link_to "#{user.name}" + ", #{user.age}", name_path(user.name, user.age)
-    br
-div#counter
+/ p
+/   - @users.each do |user| 
+/     =<> link_to "#{user.name}" + ", #{user.age}", name_path(user.name, user.age)
+/     br
+/ div#counter
