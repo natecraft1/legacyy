@@ -39,14 +39,15 @@
 </body>
 <script type="text/javascript">
 function preloadImages(srcs, imgs, callback) {
-	console.log($(".span12").width()/4 - 60);
+
   var img;
   var remaining = srcs.length;
   for (var i = 0; i < srcs.length; i++) {
     img = new Image();
     img.onload = function() {
-        --remaining;
+    	  --remaining;
         if (remaining <= 0) {
+        	console.log(remaining);
             callback(imgs);
         }
     };
@@ -54,12 +55,13 @@ function preloadImages(srcs, imgs, callback) {
     img.width = "280"; 
     img.className = "home_img";
     // + ((Math.random()*200 ) + 200);
-    console.log(img.width);
     imgs.push(img);
   }
+  console.log(imgs.length);
 }
 function imagesReady(imgs) {
 	for (i=0; i<imgs.length; i++) {
+		console.log(imgs[i]);
 		$(".parallax").append("<li><div style='background-image:url(" + imgs[i].src + ")' class='parallax-background img" + i + "'></div><div class='herro'><h1>Herro Prease</h1></div></li>");
 		// $(".span12").append(imgs[i]);
 	}
@@ -72,6 +74,11 @@ function imagesReady(imgs) {
 	var diffHeight = $divs.eq(0).height() - liHeight;
 
 	var i, len, div, li, offset, scroll, top;
+
+	var offsets = $divs.get().map(function(div, d) {
+		return $(div).offset();
+	});
+	
 	// loop through divs
 	var render = function() {
 		top = scrolling.scrollTop;
@@ -80,9 +87,9 @@ function imagesReady(imgs) {
 			// get one div
 			div = $divs[i];
 			// calculate the offset top of the div
-			offset = $(div).offset().top;
+			offset = top - offsets[i].top;
 			// calculate the amount to scroll
-			scroll = Math.round(((top - offset)/liHeight) * diffHeight);
+			scroll = Math.round(offset / liHeight * diffHeight);
 			// apply the scroll amount
 			div.style.webkitTransform =  "translate3d(0px," + scroll + "px, 0px)"
 
@@ -99,9 +106,9 @@ function imagesReady(imgs) {
 // then to call it, you would use this
 var imageSrcs = [];
 <% @image_array.each do |x| %>
+	<% puts @image_array.length %>
 	imageSrcs.push("<%= x.avatar.url %>")
 <% end %>
-
 var images = [];
 
 preloadImages(imageSrcs, images, imagesReady);
