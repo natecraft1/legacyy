@@ -11,7 +11,8 @@ class PagesController < ApplicationController
 				@image_array << x
 			end 
 		}
-		puts "image array = #{@image_array[0].avatar.url}"
+		puts "image array length = #{@image_array.length}"
+		puts "image array = #{@image_array.map {|x| x.avatar_file_name}}"
 		@usernames = @users.collect { |item| item.name }
 	end
 end

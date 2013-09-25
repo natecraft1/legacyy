@@ -12,6 +12,7 @@
 			list-style: none;
 			overflow: hidden;
 			height: 400px;
+			width: 600px;
 			position: relative;
 
 		}
@@ -57,7 +58,6 @@ function preloadImages(srcs, imgs, callback) {
     // + ((Math.random()*200 ) + 200);
     imgs.push(img);
   }
-  console.log(imgs.length);
 }
 function imagesReady(imgs) {
 	for (i=0; i<imgs.length; i++) {
@@ -106,7 +106,6 @@ function imagesReady(imgs) {
 // then to call it, you would use this
 var imageSrcs = [];
 <% @image_array.each do |x| %>
-	<% puts @image_array.length %>
 	imageSrcs.push("<%= x.avatar.url %>")
 <% end %>
 var images = [];

@@ -130,7 +130,7 @@ $(document).ready(function() {
       .data(data, String);
     texts.attr("class","year")
     .transition()
-      .duration(750)
+      .duration(500)
       .attr("dx", function(d, i) { return i*space + 20 + space*4 })
       .attr("fill", '#161738')
       .attr('font-size', function(d) { 
@@ -205,7 +205,7 @@ $(document).ready(function() {
       return false;
     })
     .transition()
-    .duration(700)
+    .duration(450)
     .attr('dx', function(d, i) { return i*space + 20 + space*4})
     .each('start', function(d) { d3.selectAll("text").attr("class", "animating year"); })
     .each('end', function(d) { 
