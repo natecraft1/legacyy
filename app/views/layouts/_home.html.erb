@@ -32,7 +32,7 @@
 		}
 		.parallel {
 			height: 385px;
-			padding-left: 30px;
+			padding-left: 30px;		
 		}
 		ul li .herro {
 			position: absolute;
@@ -44,7 +44,7 @@
 		}
 		h1 {
 			font-size: 60px;
-			margin-bottom: 0;
+			margin: 0;
 		}
 		
 	</style>
@@ -80,15 +80,7 @@ function preloadImages(srcs, imgs, callback) {
 }
 function imagesReady(imgs, srcs) {
 	var span_width = $('.span12').width();
-	var randomize = function(i) {
-		if (i%2 === 0) {
-			return 1;
-		}
-		else {
-
-			return 120;
-		}
-	}
+	
 	var rand_float = function(i) {
 		if (i%2 === 0) {
 			return "right";
@@ -99,7 +91,7 @@ function imagesReady(imgs, srcs) {
 	}
 	for (i=0; i<imgs.length; i++) {
 		console.log(imgs[i]);
-		$(".parallax").append("<div class='parallel img" + i + "' style='width:" + (span_width - 782) + "px;float:" + rand_float(i) + "'><h1>" + srcs[i].what_i_did +"</h1></div><li class='img" + i + "' style='left:" + randomize(i) + "px'><div style='background-image:url(" + imgs[i].src + ")' class='parallax-background'></div><div class='herro'><h1>" + srcs[i].year + "</h1></div></li>");
+		$(".parallax").append("<div class='parallel img" + i + "' style='width:" + (span_width - 780) + "px;float:" + rand_float(i) + "'><h1>" + srcs[i].what_i_did +"</h1></div><li class='img" + i + "' style='left:0'><div style='background-image:url(" + imgs[i].src + ")' class='parallax-background'></div><div class='herro'><h1>" + srcs[i].year + "</h1></div></li>");
 		// $(".span12").append(imgs[i]);
 	}
 	// start parallaxing
