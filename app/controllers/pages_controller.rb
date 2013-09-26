@@ -11,8 +11,9 @@ class PagesController < ApplicationController
 				@image_array << x
 			end 
 		}
+		# @what_i_did = @image_array.map { |x| x.what_i_did.gsub("")}
 		puts "image array length = #{@image_array.length}"
-		puts "image array = #{@image_array.map {|x| x.avatar_file_name}}"
+		puts "image array = #{@image_array}"
 		@usernames = @users.collect { |item| item.name }
 	end
 end

@@ -12,23 +12,31 @@
 			list-style: none;
 			overflow: hidden;
 			height: 400px;
-			width: 600px;
+			width: 750px;
 			position: relative;
-
+			margin-bottom: 30px;
+			display: inline-block;
 		}
 		.parallax-background {
 			height: 600px;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		.parallel {
+			height: 350px;
+			padding-top: 50px;
+			padding-left: 30px;
 		}
 		ul li .herro {
 			position: absolute;
-			top: 100px;
-			left: 100px;
-			color: white;
+			top: 70px;
+			left: 30px;
+			color: black;
 			font-family: helvetica;
 
 		}
 		h1 {
-			font-size: 72px;
+			font-size: 60px;
 			margin-bottom: 0;
 		}
 		
@@ -40,7 +48,7 @@
 </body>
 <script type="text/javascript">
 function preloadImages(srcs, imgs, callback) {
-
+	console.log(srcs);
   var img;
   var remaining = srcs.length;
   for (var i = 0; i < srcs.length; i++) {
@@ -49,23 +57,40 @@ function preloadImages(srcs, imgs, callback) {
     	  --remaining;
         if (remaining <= 0) {
         	console.log(remaining);
-            callback(imgs);
+            callback(imgs, srcs);
         }
     };
-    img.src = srcs[i];
+    imgs.year = srcs[i].year;
+    img.src = srcs[i].url;
     img.width = "280"; 
     img.className = "home_img";
-    // + ((Math.random()*200 ) + 200);
     imgs.push(img);
   }
 }
-function imagesReady(imgs) {
+function imagesReady(imgs, srcs) {
+	var span_width = $('.span12').width();
+	var randomize = function(i) {
+		if (i%2 === 0) {
+			return 1;
+		}
+		else {
+
+			return 120;
+		}
+	}
+	var rand_float = function(i) {
+		if (i%2 === 0) {
+			return "right";
+		} 
+		else {
+			return "left";
+		}
+	}
 	for (i=0; i<imgs.length; i++) {
 		console.log(imgs[i]);
-		$(".parallax").append("<li><div style='background-image:url(" + imgs[i].src + ")' class='parallax-background img" + i + "'></div><div class='herro'><h1>Herro Prease</h1></div></li>");
+		$(".parallax").append("<div class='parallel' style='width:" + (span_width - 782) + "px;float:" + rand_float(i) + "'><h1>" + srcs[i].what_i_did +"</h1></div><li style='left:" + randomize(i) + "px'><div style='background-image:url(" + imgs[i].src + ")' class='parallax-background img" + i + "'></div><div class='herro'><h1>" + srcs[i].year + "</h1></div></li>");
 		// $(".span12").append(imgs[i]);
 	}
-
 	// start parallaxing
 	var $container = $('.parallax');
 	var $divs = $container.find('div.parallax-background');
@@ -89,7 +114,7 @@ function imagesReady(imgs) {
 			// calculate the offset top of the div
 			offset = top - offsets[i].top;
 			// calculate the amount to scroll
-			scroll = Math.round(offset / liHeight * diffHeight);
+			scroll = ~~(offset / liHeight * diffHeight);
 			// apply the scroll amount
 			div.style.webkitTransform =  "translate3d(0px," + scroll + "px, 0px)"
 
@@ -100,13 +125,12 @@ function imagesReady(imgs) {
 		requestAnimationFrame(loop);
 		render();
 	})();
-
 }
-
 // then to call it, you would use this
 var imageSrcs = [];
 <% @image_array.each do |x| %>
-	imageSrcs.push("<%= x.avatar.url %>")
+	<% puts x.what_i_did.class %>
+	imageSrcs.push({url: "<%= x.avatar.url %>", year: "<%= x.year %>", what_i_did: "<%= x.what_i_did.gsub(34.chr, '').split(" ")[0..18].join(" ") %>" })
 <% end %>
 var images = [];
 
