@@ -1,6 +1,5 @@
 = render 'layouts/home'
-/ h1 WordsBond
-
+  
 / p
 /   - @users.each do |user| 
 /     =<> link_to "#{user.name}" + ", #{user.age}", name_path(user.name, user.age)

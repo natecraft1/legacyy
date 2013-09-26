@@ -19,13 +19,11 @@ class UsersController < ApplicationController
     gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
     gon.shortArray = @user.shortArray(params[:age])
-    # puts "$$" * 20
-    # puts @shortArray
+
     gon.ageray = @user.ageray
 
     gon.yearborn = @user.yearborn
-# returns a boolean of whether or not there is a post for the url that is requested
-# if there is, fill in the background of the page and edit fields with their current values
+    
     @years_true = !@user.years.find_by_year(params[:age]).nil?
 
     @currentyr = User.find_user_year(params[:name], params[:age])

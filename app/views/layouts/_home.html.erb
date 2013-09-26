@@ -4,6 +4,11 @@
 			margin: 0;
 			padding: 0;
 		}
+		#introduction {
+			margin-top: 90px;
+			margin-bottom: 20px;
+			color: gray;
+		}
 		ul {
 			margin: 0;
 			padding: 0;
@@ -27,7 +32,6 @@
 		}
 		.parallel {
 			height: 385px;
-			padding-top: 15px;
 			padding-left: 30px;
 		}
 		ul li .herro {
@@ -50,6 +54,10 @@
 	</ul>
 </body>
 <script type="text/javascript">
+$('.span12').prepend("<h1 id='introduction'>Hello, this is my story.   Start yours here.</h1>");
+$('#introduction').delay(4000).hide(1500, function() {
+	$('#introduction').css("margin-right", "3000px");
+});
 function preloadImages(srcs, imgs, callback) {
 	console.log(srcs);
   var img;
@@ -132,8 +140,7 @@ function imagesReady(imgs, srcs) {
 // then to call it, you would use this
 var imageSrcs = [];
 <% @image_array.each do |x| %>
-	<% puts x.what_i_did.class %>
-	imageSrcs.push({url: "<%= x.avatar.url %>", year: "<%= x.year %>", what_i_did: "<%= x.what_i_did.gsub(34.chr, '').split(" ")[0..18].join(" ") %>" })
+	imageSrcs.push({url: "<%= x.avatar.url %>", year: "<%= x.year %>", what_i_did: "<%= x.what_i_did.gsub(34.chr, '').split(" ")[0..25].join(" ") %>" })
 <% end %>
 var images = [];
 

@@ -6,7 +6,8 @@
     =< link_to "Logout", signout_path, :method => 'delete'
     - if current_page?(root_path)
       =< link_to "Profile", name_path(current_user.name, current_user.age) 
-  = link_to "get started", signup_path, :class => 'btn btn-small get_started'
+  - unless signed_in?
+    = link_to "Get Started", signup_path, :class => 'get_started'
 
 
 
