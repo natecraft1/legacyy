@@ -1,7 +1,9 @@
 .left
+  = link_to "Wall", '#'
   = link_to "Home", root_path
   - if !signed_in?
     =< link_to "Login", signin_path, :class => 'dropdown-toggle' 
+    = link_to "Explore", '#'
   - else 
     =< link_to "Logout", signout_path, :method => 'delete'
     - if current_page?(root_path)

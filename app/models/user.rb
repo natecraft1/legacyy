@@ -30,7 +30,11 @@ class User < ActiveRecord::Base
   end
 
   def ageray
-    ageray ||= (0..age).to_a
+  	if datenow == dateborn 
+  		ageray = (0..age + yearnow - yearborn).to_a
+  	else
+    	ageray ||= (0..age).to_a
+  	end
   end
 
 	def yearnow
