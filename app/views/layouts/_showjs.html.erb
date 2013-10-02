@@ -1,0 +1,412 @@
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ 
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $(function() {
+    $( ".lesson" ).draggable();
+    $(".what_i_did").draggable();
+  });
+  $('.simple_form.year').addClass('edit_year');
+  $('#year_year').val(gon.currentyr);
+  $('#edit_year_hidden').val("<%= params[:age] %>");
+  $('span.fullyr').html(gon.yearborn + parseInt("<%= params[:age] %>"));
+  $('span.fullyrtwo').html(gon.yearborn + parseInt("<%= params[:age] %>") + 1);
+
+  $('span.yr').html(gon.currentyr);
+  $('.edit_year').hide();
+
+
+  findContent(gon.currentyr);
+
+  
+
+  d3.select("body").append("svg");
+  var yeardata = gon.ageray,
+    displayedYears = displayData(parseInt(gon.currentyr)),
+    containerWidth = 800,
+    svg = d3.select("svg").attr('height', 60),
+    space = containerWidth/displayedYears.length,
+    scale = d3.scale.linear()
+              .domain([0, d3.max(yeardata)])
+              .range([9, 18]);
+    scale2 = d3.scale.linear()
+              .domain([0, d3.max(yeardata)])
+              .range([13, 18]);
+    scale3 = d3.scale.linear()
+              .domain([0, d3.max(displayedYears)])
+              .range([-1,1]);
+  
+  var svgcontainer = svg.append('g');
+  
+  function displayData(year) {
+    var length = yeardata.length
+    var short_length = (length > 9) ? 9 : length;
+    var diff = year - ((short_length-1)/2);
+    var abs_diff = Math.abs(diff);
+    
+    if (length < 9) {
+      return yeardata;
+    }
+    else {
+      if (diff < 0) {
+        return yeardata.slice(0, 9);
+      }
+      else if ((short_length+1)/2 + year > yeardata[length-1]){
+        return yeardata.slice(yeardata.length-9, yeardata.length);
+      }
+      else {
+        return yeardata.slice(year-4, year+5);
+      }
+    }
+  }
+
+  var texts,
+      circles;
+  
+  update(displayedYears);
+  
+  function update(data) {
+
+    // remove the clicked id from the previous clicked element and change it's color back to blue
+    d3.selectAll('circle').style('fill', '#3CCAFA');
+    d3.select("#clicked").attr("id", "");
+    d3.select("#clicked_circle")
+     .attr("id", "");
+
+    function mouseEffects() {
+      d3.selectAll('.year')
+       .on("mouseover", function(d, i) {
+        if (d3.select(this).attr("id") !== "clicked") { 
+          d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('font-size', function(d) { return 45 });
+
+          d3.select(circles[0][data.indexOf(d)])
+          .style('fill', 'red');
+        }
+       })
+      .on("mouseout", function(d, i) {
+        if (d3.select(this).attr("id") !== "clicked") { 
+          d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('font-size', function(d) { return scale2(d) });
+
+          d3.select(circles[0][data.indexOf(d)])
+          .style('fill', '#3CCAFA');
+        }
+      });
+    }
+
+    console.log(d3.select('.clicked'));
+    // d3.select('.clicked').attr('font-size', function(d) { return scale2(d) })
+    //   .attr("fill", "#161738")
+    //   .attr('opacity', 1);
+
+    circles = svgcontainer.selectAll("circle")
+    .data(data);
+    circles.transition()
+      .duration(600)
+      .attr('r', function(d) { return scale(d); });
+
+
+    circles.enter()
+    .append("circle")
+    .attr('class', 'circle')
+    .style('fill', '#3CCAFA')
+    .style('opacity', .3)
+    .attr('cx', 20)
+    .attr('cy', 30)
+    .attr('r', function(d) { return scale(d); })
+    .transition()
+    .duration(600)
+    .attr('cx', function(d,i) { return i*space + 20 + space*4;})
+    .attr('cy', 30);
+
+
+    texts = svgcontainer.selectAll('text')
+      .data(data, String);
+    texts.attr("class","year")
+    .transition()
+      .duration(500)
+      .attr("dx", function(d, i) { return i*space + 20 + space*4 })
+      .attr("fill", '#161738')
+      .attr('font-size', function(d) { 
+        return scale2(d);
+      })
+      .each("end", mouseEffects);
+
+    texts.enter().append('text')
+    .attr("class", "year")
+    .attr('dx', function(d, i) { return 0;})
+    .attr('dy', 34)
+    .attr("xlink:href", '#')
+    .attr('pointer-events', 'all')
+    .attr('font-size', function(d) { return scale2(d) })
+    .style('font-family', 'Arial')
+    .attr('font-weight', 'bold')
+    .attr('font-style', 'italic')
+    .attr('fill', '#161738')
+    .on("click", function() {
+      // d3.selectAll('.clicked').attr("class", "year");
+      var value = parseInt(d3.select(this).text());
+      // call function to highlight clicked item
+      
+      update(setNewData(value));  
+      d3.selectAll('.circle')
+        .transition()
+        .duration(800)
+        .attr('r', function(d) { return scale(d); });
+
+
+      var val = $(this).text();
+      
+      // highLight(value);
+   
+      // function highLight(value) {
+      //   console.log("claasing");
+      //   d3.select(texts[0][data.indexOf(value)]).attr("class", "clicked");
+      //   console.log(d3.select(texts[0][data.indexOf(value)]));
+
+      // }
+     
+
+      $('span.yr').html(val);
+      $('span.fullyr').html(gon.yearborn + parseInt(val));
+      $('span.fullyrtwo').html(gon.yearborn + parseInt(val) + 1);
+      $('#year_year').val($(this).text());
+      $('#edit_year_hidden').val($(this).text());
+
+
+
+      // when you click a year, give it the clicked class and fill its bubble with red.
+      d3.select(texts[0][data.indexOf(value)]).attr("id", "clicked");
+      d3.select(circles[0][data.indexOf(value)]).attr("id", "clicked_circle")
+        .style("fill", 'red');
+
+      // console.log(d3.selectAll(texts[0]));
+      // colorBubble(val);
+
+      $('.edit_year').attr('action', "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val + "/edit" );
+      $('.edit_year > #edit_year_what_i_did').attr("name", "year[what_i_did]");
+      $('.edit_year > #edit_year_lesson_or_story').attr("name", "year[lesson_or_story]");
+      $('.edit_year > #edit_year_avatar').attr("name", "year[avatar]");
+      $('.edit_year > #edit_year_hidden').attr("name", "year[year]");   
+
+      $.get( "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val, function(data) {
+      });
+     
+      // find the post of the year that is clicked
+      findContent(val);
+      ajaxReq(val);
+      history.replaceState({}, '', "/" + gon.username + '/' + val );
+      return false;
+    })
+    .transition()
+    .duration(450)
+    .attr('dx', function(d, i) { return i*space + 20 + space*4})
+    .each('start', function(d) { d3.selectAll("text").attr("class", "animating year"); })
+    .each('end', function(d) { 
+      d3.selectAll("text").attr("class", "year"); 
+      d3.select(texts[0][data.indexOf()]).attr("class", "clicked");
+    });
+    
+    texts.text(function(d) { return d;});
+
+    texts.exit()
+      .transition()
+      .duration(700)
+      .attr('dx', function(d, i) { return scale3(i)*space*10 + space*3 + 20;})
+      .attr('opacity', .5)
+      .remove();
+
+    mouseEffects();
+    
+  }
+
+  function setNewData(value) {
+    console.log(value);
+    console.log(displayedYears);
+// if the number we clicked on is within the diff, the data doesn't change
+    var first_from_all = yeardata[0]
+    var last_from_all = yeardata[yeardata.length-1]
+    var diff = value - displayedYears[(displayedYears.length-1)/2]
+    var first = displayedYears[0]
+    var last = displayedYears[displayedYears.length-1]
+    var new_diff = last_from_all - value;
+    var new_diff_two = first_from_all + value;
+    var diff_abs = Math.abs(diff);
+    var max_shift_left = first - first_from_all;
+    var max_shift_right = last_from_all - last;
+    
+    function trimRight(diff) {
+      displayedYears.splice(0, diff);
+      for (i=0; i < 1*diff; i++) {
+        displayedYears.push(last + i + 1)
+      } 
+    }
+    function trimLeft(diff) {
+      displayedYears.splice(displayedYears.length - diff, diff);
+      for (i=0; i < diff; i++) {
+        displayedYears.unshift(first - i - 1)
+      }
+    }
+
+    if (diff > 0) {   
+      
+      if (last_from_all === last) {
+        return displayedYears;
+      }
+      else {
+        if (diff > max_shift_right) {
+          trimRight(max_shift_right);
+        }
+        else { 
+          trimRight(diff);
+        }
+      } 
+    }
+    else {
+      if (first_from_all === first) {
+        return displayedYears;
+      }
+      else {
+        if (diff_abs > max_shift_left) {
+          trimLeft(max_shift_left);
+        }
+        else {
+          trimLeft(diff_abs);
+        }
+      }
+    } 
+    return displayedYears;
+  }
+
+  // when the page loads, call colorBubble with the current params
+  // colorBubble(gon.currentyr);
+  
+  // function colorBubble(selectedAge) {
+  //   // d3.select('#clicked')
+  //   //   .attr('opacity', .5)
+  //   d3.select(circles[0][selectedAge])
+  //     .style('fill', 'red');
+  // }
+
+  
+
+// if the page is refreshed and there IS a post for that year, ajax the data we'll display
+  <% if @years_true %>
+    ajaxReq(gon.currentyr);
+  <% end %>
+
+// when don't we want to call this function? 
+// when there is not a year post for the year that is clicked 
+  function ajaxReq(value) {
+    <% if !@user.nil? %>
+      $.ajax({ 
+          url: "/users/<%= @user.name.gsub(' ', '%20') %>/years/" + value, 
+          type: "GET",
+          dataType: 'json',
+          success: function(data) {     
+            $('body').css("background", "url(" + data.avatar_url + ") no-repeat fixed").css("background-size", "100% auto");  
+            $("#edit_year_what_i_did").val(data.what_i_did);
+            $("#edit_year_lesson_or_story").val(data.lesson_or_story);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log("error");
+
+          }
+      });
+    <% end %>
+  }
+  function findContent(value) {  
+   
+    for (var i=0; i<=gon.posts.length -1; i++) {
+      if ((gon.posts.length !== 0) && (gon.posts[i].year == value))
+      {
+        $('.what_i_did').show();
+        $('.lesson').show();
+        $('.new_year').hide();
+        $('.edit').show();
+        what_i_did = gon.posts[i].what_i_did;
+        lesson_or_story = gon.posts[i].lesson_or_story;
+        insertContent(what_i_did, lesson_or_story);
+        
+        break;
+      }
+      else {
+        $('body').css("background", '');
+        $('.lesson').hide();
+        $('.what_i_did').hide();
+        $('.avatar').attr("src", '');
+        $('.avatar').html("");
+        $('.edit').hide();
+        $('.edit_year').hide();
+        $('.new_year').show();
+        $('.what_i_did').html('');
+        $('.lesson').html('');
+      }
+    }
+  }
+  function insertContent(what, lesson) {
+    $('div.lesson').html('');
+    $('div.what_i_did').html('');
+    $('.what_i_did').html(what);
+    $('.lesson').html(lesson);
+  }
+  // function arrowClick(value) {
+  //   $(".arrow").click(function(event) {
+  //     event.preventDefault();
+  //     //might need ajax call to get params
+  //   });
+  // }
+  $('.edit').click(function() {
+    $('.edit_year').toggle('slow');
+    $('.edit_year').val("Update year");
+    return false;
+  });
+  // $(".year").click(function(event) {
+  //   event.preventDefault();
+
+    // $('#year_year').val($(this).text());
+    // $('#edit_year_hidden').val($(this).text());
+    // console.log("year clicked");
+    // var val = $(this).text();
+    // console.log(val);
+
+    // // d3.select('#clicked').attr("id", '');
+    // // d3.select(this).attr("id", "clicked");
+    // // d3.select(this)
+    // //  .attr('font-size', function(d) { return scale2(d) })
+    // //  .attr('opacity', 1);
+    // // d3.select(circles[0][val])
+    // //  .style('fill', 'red');
+
+    // // colorBubble(val);
+
+    // $('.edit_year').attr('action', "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val + "/edit" );
+    // $('.edit_year > #edit_year_what_i_did').attr("name", "year[what_i_did]");
+    // $('.edit_year > #edit_year_lesson_or_story').attr("name", "year[lesson_or_story]");
+    // $('.edit_year > #edit_year_avatar').attr("name", "year[avatar]");
+    // $('.edit_year > #edit_year_hidden').attr("name", "year[year]");   
+
+    // $.get( "/<% if !@user.nil?%><%= @user.name %><% end %>/" + val, function(data) {
+    // });
+
+    
+    // // changes the sentence "this is me at..."
+    
+   
+
+    // // find the post of the year that is clicked
+    // findContent(val);
+    // ajaxReq(val);
+
+
+    // history.replaceState({}, '', "/" + gon.username + '/' + val );
+    // return false;
+  // });
+});
+</script>
