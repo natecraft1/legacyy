@@ -3,7 +3,11 @@ FactoryGirl.define do
 	sequence :email do |n|
 		"person#{n}@email.com"
 	end
+  sequence :id do |n|
+    n
+  end
   factory :user do
+    id       { generate(:id) }
     name     "Nathan Glass"	
     email    { generate(:email) }
     password "foobar"

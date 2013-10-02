@@ -1,13 +1,14 @@
 class User < ActiveRecord::Base
 	has_many :years
 	has_many :relationships, dependent: :destroy, foreign_key: :follower_id
+  has_many :followed_users, through: :relationships, source: :followed
 
 
 	before_save { self.email = email.downcase }
   before_create :create_remember_token
 	validates :name, presence: true, length: {minimum: 3, maximum: 25}, allow_blank: false, uniqueness: true
   validates_format_of :name, :with => /^[^0-9`!@#\$%\^&*+_=]+$/, :multiline => true
-	validates :email, presence: true
+	validates :email, presence: true, uniqueness: true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
 
 	has_secure_password
@@ -22,6 +23,14 @@ class User < ActiveRecord::Base
 
 	def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
+	end
+
+	def following?(followed)
+		relationships.find_by_followed_id(followed)
+	end
+
+	def follow!(followed)
+		relationships.create!(:followed_id => followed.id)
 	end
 
 	def age

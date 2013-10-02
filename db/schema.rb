@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130902152457) do
+ActiveRecord::Schema.define(version: 20131002041822) do
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20130902152457) do
   end
 
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -36,8 +37,8 @@ ActiveRecord::Schema.define(version: 20130902152457) do
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
   create_table "years", force: true do |t|
-    t.string   "what_i_did"
-    t.string   "lesson_or_story"
+    t.text     "what_i_did"
+    t.text     "lesson_or_story"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"

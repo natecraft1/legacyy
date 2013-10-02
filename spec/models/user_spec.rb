@@ -13,7 +13,11 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
-  
+  it { should respond_to(:relationships) }
+  it { should respond_to(:followed_users) }
+  it { should respond_to(:following?) }
+  it { should respond_to(:follow!) }
+
 
 
 	describe "when name is not present" do
@@ -89,12 +93,26 @@ describe User do
   end
 
   describe "relationships" do
+    let(:user) { FactoryGirl.create(:user) }
     before(:each) do
-      @user.save
+    @followed = FactoryGirl.create(:user, :name => "Nathan Ass", :email => FactoryGirl.generate(:email))
     end
+
     it "should have a relationship method" do
-      expect(@user).to respond_to(:relationships)
+      expect(user).to respond_to(:relationships)
     end
+    it "should have a following method" do
+      expect(user).to respond_to(:followed_users)
+    end
+    it "should follow another user" do
+      user.follow!(@followed)
+      expect(user).to be_following(@followed)
+    end
+    it "should include the followed user in the user.following array" do
+      user.follow!(@followed)
+      user.followed_users.should include(@followed)
+    end
+
   end
 end
 
