@@ -8,6 +8,12 @@ FactoryGirl.define do
   end
   factory :user do
     name     "nathan"	
+  sequence :id do |n|
+    n
+  end
+  factory :user do
+    id       { generate(:id) }
+    name     "Nathan Glass"	
     email    { generate(:email) }
     password "foobar"
     password_confirmation "foobar"

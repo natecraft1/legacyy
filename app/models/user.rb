@@ -1,13 +1,17 @@
 class User < ActiveRecord::Base
 	has_many :years
 	has_many :relationships, dependent: :destroy, foreign_key: :follower_id
-
+  has_many :followed_users, through: :relationships, source: :followed
+	has_many :reverse_relationships, foreign_key: "followed_id",
+                                   class_name:  "Relationship",
+                                   dependent:   :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
 
 	before_save { self.email = email.downcase }
   before_create :create_remember_token
 	validates :name, presence: true, length: {minimum: 3, maximum: 25}, allow_blank: false, uniqueness: true
   validates_format_of :name, :with => /^[^0-9`!@#\$%\^&*+_=]+$/, :multiline => true
-	validates :email, presence: true
+	validates :email, presence: true, uniqueness: true
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
 
 	has_secure_password
@@ -24,8 +28,21 @@ class User < ActiveRecord::Base
 	def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
 	end
-# Age methods
+
+	def following?(followed)
+		relationships.find_by_followed_id(followed)
+	end
+
+	def follow!(followed)
+		relationships.create!(:followed_id => followed.id)
+	end
+
+	def unfollow!(other_user)
+    relationships.find_by(followed_id: other_user.id).destroy!
+  end
+
 	def age
+		puts "date_of_birth == #{Date.parse(DateTime.now.to_s.slice(0..9)).class}"
     age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
   end
 

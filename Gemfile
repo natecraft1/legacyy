@@ -17,6 +17,9 @@ gem 'rabl'
 gem 'awesome_print'
 gem 'figaro'
 
+gem 'faker', '1.1.2'
+gem 'newrelic_rpm'
+
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'

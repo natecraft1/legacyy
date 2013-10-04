@@ -1,31 +1,60 @@
 require 'spec_helper'
 
 describe Relationship do
-	before do
-		@follower = FactoryGirl.create(:user, :name => "Scotty the Cutie")
-		@followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
-		@attr = { :followed_id => @followed.id }
-	end
-	it "should create a new instance with valid attrs" do
+	
+	let(:follower) { FactoryGirl.create(:user) }
+  let(:followed) { FactoryGirl.create(:user, :name => "Nathan Ass", :email => FactoryGirl.generate(:email)) }
+  let(:relationship) { follower.relationships.build(followed_id: followed.id) }
+
+  subject { relationship }
+
+  it { should be_valid }
+
+  describe "follower methods" do
+    it { should respond_to(:follower) }
+    it { should respond_to(:followed) }
+    its(:follower) { should eq follower }
+    its(:followed) { should eq followed }
+  end
+
+	it "should create a new instance with valid attributes" do
 		@follower.relationships.create!(@attr)
-		puts @follower.relationships.inspect
 	end
 
 	describe "follow methods" do
-		before do
+		
+		before(:each) do
 			@relationship = @follower.relationships.create!(@attr)
 		end
-		it "should have a follower attribute" do
-			expect(@relationship).to respond_to(:follower)
+
+		it "should have a follower attribute" do 
+			@relationship.should respond_to(:follower)
 		end
 		it "should have the right follower" do
-			expect(@relationship.follower).to eq(@follower)
+			@relationship.follower.should == @follower
 		end
-		it "should have a followed attribute" do
-			expect(@relationship).to respond_to(:followed)
+		it "should have a followed attribute" do 
+			@relationship.should respond_to(:followed)
 		end
-		it "should have the right followed" do
-			expect(@relationship.followed).to eq(@followed)
+		it "should have the right follower" do
+			@relationship.followed.should == @followed
 		end
+	end
+	describe "validations" do
+		describe "when followed id is not present" do
+    	before { relationship.followed_id = nil }
+    	it { should_not be_valid }
+  	end
+
+  	describe "when follower id is not present" do
+    	before { relationship.follower_id = nil }
+    	it { should_not be_valid }
+  	end
+		it "should require a follower id" do
+			Relationship.new(@attr).should_not be_valid
+		end
+		it "should require a followed id" do 
+			@follower.relationships.build.should_not be_valid
+		end 
 	end
 end

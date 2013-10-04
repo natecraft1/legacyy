@@ -138,7 +138,7 @@ describe "user page describes" do
  		end
  	end
  	describe "follower/following counts" do
-		let(:user) = FactoryGirl.create(:user)
+		let(:user) { FactoryGirl.create(:user) }
     let(:other_user) { FactoryGirl.create(:user) }
     before do
       other_user.follow!(user)
