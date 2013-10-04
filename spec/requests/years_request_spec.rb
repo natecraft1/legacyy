@@ -137,6 +137,17 @@ describe "user page describes" do
  			expect(page).to have_content("32")
  		end
  	end
+ 	describe "follower/following counts" do
+		let(:user) = FactoryGirl.create(:user)
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      other_user.follow!(user)
+      visit root_path
+    end
+
+    it { should have_link("0 following", href: following_user_path(user)) }
+    it { should have_link("1 followers", href: followers_user_path(user)) }
+  end
 end
 
 # why does rspec blow up when i change users#show to find_by_name?
