@@ -14,6 +14,9 @@ gem 'paperclip'
 gem 'uglifier', '>= 1.3.0'
 gem 'gon'
 gem 'rabl'
+gem 'faker', '1.1.2'
+gem 'newrelic_rpm'
+
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'

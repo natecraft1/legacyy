@@ -2,7 +2,10 @@ class User < ActiveRecord::Base
 	has_many :years
 	has_many :relationships, dependent: :destroy, foreign_key: :follower_id
   has_many :followed_users, through: :relationships, source: :followed
-
+	has_many :reverse_relationships, foreign_key: "followed_id",
+                                   class_name:  "Relationship",
+                                   dependent:   :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
 
 	before_save { self.email = email.downcase }
   before_create :create_remember_token
@@ -33,7 +36,12 @@ class User < ActiveRecord::Base
 		relationships.create!(:followed_id => followed.id)
 	end
 
+	def unfollow!(other_user)
+    relationships.find_by(followed_id: other_user.id).destroy!
+  end
+
 	def age
+		puts "date_of_birth == #{Date.parse(DateTime.now.to_s.slice(0..9)).class}"
     age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
   end
 
