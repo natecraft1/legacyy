@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 	def name
     gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
+		puts @user.inspect
     gon.shortArray = @user.shortArray(params[:age])
 
     gon.ageray = @user.ageray

@@ -16,7 +16,7 @@ def make_users
                  email:    email,
                  password: password,
                  password_confirmation: password,
-                 date_of_birth: Date.parse(DateTime.now.to_s.slice(0..9)))
+                 date_of_birth: Date.parse(DateTime.now.to_s.slice(0..9).gsub("2013", "2000")))
   end
 end
 

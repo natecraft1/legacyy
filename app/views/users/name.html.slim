@@ -1,5 +1,4 @@
 = render 'layouts/showjs'
-= render 'layouts/follow'
 
 title = @user.name
 p.intro 
@@ -11,6 +10,8 @@ p.from_to
          span.fullyr>
          | - #{@user.monthborn}/
          span.fullyrtwo
+- if signed_in? 
+  = render 'layouts/follow'
 svg
 
 br

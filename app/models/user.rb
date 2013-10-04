@@ -42,7 +42,12 @@ class User < ActiveRecord::Base
   end
 
 	def age
-		puts "date_of_birth == #{Date.parse(DateTime.now.to_s.slice(0..9)).class}"
+		puts "datenow = #{datenow}"
+		puts "dateborn = #{dateborn}"
+		puts "yearnow = #{yearnow}"
+		puts "yearborn = #{yearborn}"
+
+
     age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
   end
 
@@ -84,6 +89,7 @@ class User < ActiveRecord::Base
 
   def shortArray(age)
     i = ageray.index(age.to_i)
+    puts "i === #{age}"
     range =  i < 6 ? (ageray[0]..ageray[10]).to_a : (i-5..i+5).to_a
   end
 
