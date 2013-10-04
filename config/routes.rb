@@ -4,6 +4,9 @@ root :to => 'pages#home'
 
 resources :users, except: [:show] do
   resources :years
+  member do
+      get :following, :followers
+  end
 end
 get 'signup' => 'users#new'
 

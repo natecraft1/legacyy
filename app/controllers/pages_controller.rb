@@ -2,7 +2,9 @@ class PagesController < ApplicationController
 	def home
 		@users = User.all
 		@first_user = User.first
-		@image_array = switch_it_up(@first_user)
+		if @first_user != nil
+			@image_array = switch_it_up(@first_user)
+		end
 		# sort = @first_user.years.sort_by { |year| 
 		# 	year.year.to_i
 		# }
