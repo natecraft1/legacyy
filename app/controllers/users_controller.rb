@@ -16,9 +16,14 @@ class UsersController < ApplicationController
 	end
 	
 	def name
-    gon.currentyr = params[:age]
 		@user = User.find_by_name(params[:name])
-		puts @user.inspect
+		
+		if !params[:age].nil? 
+			gon.currentyr = params[:age] 
+		else 
+			redirect_to name_path(@user.name, @user.age)
+		end
+    
     gon.shortArray = @user.shortArray(params[:age])
 
     gon.ageray = @user.ageray
