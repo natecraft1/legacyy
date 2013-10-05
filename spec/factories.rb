@@ -6,11 +6,9 @@ FactoryGirl.define do
   sequence :what_i_did do |w|
     "what i did #{w}"
   end
-  factory :user do
-    name     "nathan"	
   sequence :id do |n|
-    n
-  end
+      n
+  end   
   factory :user do
     id       { generate(:id) }
     name     "Nathan Glass"	

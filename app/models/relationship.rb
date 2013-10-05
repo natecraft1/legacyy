@@ -7,4 +7,12 @@ class Relationship < ActiveRecord::Base
 	validates :follower_id, presence: true 
 	validates :followed_id, presence: true 
 
+	def self.request(requester, requestee)
+		requester_relationship = new(follower_id: requester, followed_id: requestee, status: "pending")
+		requestee_relationship = new(follower_id: requestee, followed_id: requester, status: "requested")
+		transaction do 
+			requester_relationship.save
+			requestee_relationship.save
+		end
+	end
 end

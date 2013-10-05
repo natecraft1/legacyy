@@ -2,10 +2,10 @@ class User < ActiveRecord::Base
 	has_many :years
 	has_many :relationships, dependent: :destroy, foreign_key: :follower_id
   has_many :followed_users, through: :relationships, source: :followed
-	has_many :reverse_relationships, foreign_key: "followed_id",
-                                   class_name:  "Relationship",
-                                   dependent:   :destroy
-  has_many :followers, through: :reverse_relationships, source: :follower
+	# has_many :reverse_relationships, foreign_key: "followed_id",
+ #                                   class_name:  "Relationship",
+ #                                   dependent:   :destroy
+ #  has_many :followers, through: :reverse_relationships, source: :follower
 
 	before_save { self.email = email.downcase }
   before_create :create_remember_token
@@ -42,12 +42,6 @@ class User < ActiveRecord::Base
   end
 
 	def age
-		puts "datenow = #{datenow}"
-		puts "dateborn = #{dateborn}"
-		puts "yearnow = #{yearnow}"
-		puts "yearborn = #{yearborn}"
-
-
     age ||= datenow > self.dateborn ? yearnow - self.yearborn : yearnow - self.yearborn - 1
   end
 

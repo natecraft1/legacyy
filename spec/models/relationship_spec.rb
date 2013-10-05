@@ -10,36 +10,38 @@ describe Relationship do
 
   it { should be_valid }
 
-  describe "follower methods" do
-    it { should respond_to(:follower) }
-    it { should respond_to(:followed) }
-    its(:follower) { should eq follower }
-    its(:followed) { should eq followed }
-  end
-
-	it "should create a new instance with valid attributes" do
-		@follower.relationships.create!(@attr)
-	end
 
 	describe "follow methods" do
 		
-		before(:each) do
-			@relationship = @follower.relationships.create!(@attr)
-		end
-
 		it "should have a follower attribute" do 
-			@relationship.should respond_to(:follower)
+			puts relationship.inspect
+			relationship.should respond_to(:follower)
 		end
 		it "should have the right follower" do
-			@relationship.follower.should == @follower
+			relationship.follower.should == follower
 		end
 		it "should have a followed attribute" do 
-			@relationship.should respond_to(:followed)
+			relationship.should respond_to(:followed)
 		end
 		it "should have the right follower" do
-			@relationship.followed.should == @followed
+			relationship.followed.should == followed
 		end
 	end
+	
+	describe "friend requesting" do
+		before(:each) do
+			Relationship.request(follower, followed)
+		end
+		
+		it "should respond_to follower_id" do
+			expect(follower.relationships).to respond_to(:follower)
+		end 
+		
+		it "should create a relationship" do
+			expect(follower.relationships.follower_id).to eq(follower.id)
+		end
+	end
+	
 	describe "validations" do
 		describe "when followed id is not present" do
     	before { relationship.followed_id = nil }
@@ -50,11 +52,5 @@ describe Relationship do
     	before { relationship.follower_id = nil }
     	it { should_not be_valid }
   	end
-		it "should require a follower id" do
-			Relationship.new(@attr).should_not be_valid
-		end
-		it "should require a followed id" do 
-			@follower.relationships.build.should_not be_valid
-		end 
 	end
 end
