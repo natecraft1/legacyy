@@ -16,13 +16,10 @@ svg
 
 br
 / p Add year 
-- displayed = false
-- @user.relationships.each do |relationship|
-  - if relationship.status == "requested"
-    - unless displayed
-      p<> you have requests from: 
-      - displayed = true
-    = link_to User.find(relationship.followed_id).name, name_path(User.find(relationship.followed_id).name)
+- if @requested_relationships.any?
+  p You have friend requests from: 
+  - @requested_relationships.each do |relationship|
+    = link_to relationship.followed.name, name_path(relationship.followed.name)
 
 - if flash[:notice]
   = flash[:notice]

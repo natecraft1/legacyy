@@ -79,6 +79,7 @@ class User < ActiveRecord::Base
 	end
 
 
+
 # Helper for the short array 
 
   def shortArray(age)

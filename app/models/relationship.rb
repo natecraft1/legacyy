@@ -14,6 +14,11 @@ class Relationship < ActiveRecord::Base
     return true unless find_by_follower_id_and_followed_id(friend, user).nil?
     false
   end
+	
+  def requested? 
+  	puts "#{self.inspect} called called valled"
+  	status == "requested"
+  end
 
 	def self.request(requester, requestee)
 		return false if are_friends(user, friend)
