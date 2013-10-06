@@ -9,7 +9,7 @@ resources :users, except: [:show] do
   end
 end
 get 'signup' => 'users#new'
-
+get 'relationships/req'
 resources :sessions, only: [:new, :create, :destroy]
 get 'signin' => 'sessions#new'
 delete 'signout' => 'sessions#destroy'

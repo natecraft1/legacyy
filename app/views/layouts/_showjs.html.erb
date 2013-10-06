@@ -322,10 +322,17 @@ $(document).ready(function() {
     <% end %>
   }
   function findContent(value) {  
-   
+   console.log(gon.posts.length);
+   console.log(value);
+   if (gon.posts.length === 0) {
+    erase();
+   }
+   else {
     for (var i=0; i<=gon.posts.length -1; i++) {
-      if ((gon.posts.length !== 0) && (gon.posts[i].year == value))
+      console.log("for called");
+      if (gon.posts[i].year === value)
       {
+        console.log("find if called");
         $('.what_i_did').show();
         $('.lesson').show();
         $('.new_year').hide();
@@ -337,6 +344,13 @@ $(document).ready(function() {
         break;
       }
       else {
+        erase();
+      }
+    }
+   }
+  }
+  function erase() {
+     console.log("find else called");
         $('body').css("background", '');
         $('.lesson').hide();
         $('.what_i_did').hide();
@@ -347,8 +361,6 @@ $(document).ready(function() {
         $('.new_year').show();
         $('.what_i_did').html('');
         $('.lesson').html('');
-      }
-    }
   }
   function insertContent(what, lesson) {
     $('div.lesson').html('');
