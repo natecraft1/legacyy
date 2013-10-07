@@ -17,11 +17,8 @@ class UsersController < ApplicationController
 	
 	def name
 		@user = User.find_by_name(params[:name])
-		puts "user relationships === #{@user.relationships.each {|z| z.inspect}}"
 		@relationships = @user.relationships.includes(:followed)
-		puts "relationships === #{@relationships.map {}}"
 		@requested_relationships = @relationships.select &:requested?
-		puts "@requested_relationships = #{@requested_relationships}"
 		if !params[:age].nil? 
 			gon.currentyr = params[:age] 
 		else 

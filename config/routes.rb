@@ -10,6 +10,8 @@ resources :users, except: [:show] do
 end
 get 'signup' => 'users#new'
 get 'relationships/req'
+get 'relationships/accept'
+get 'relationships/reject'
 resources :sessions, only: [:new, :create, :destroy]
 get 'signin' => 'sessions#new'
 delete 'signout' => 'sessions#destroy'

@@ -6,7 +6,7 @@
     = link_to "Explore", '#'
   - else 
     =< link_to "Logout", signout_path, :method => 'delete'
-    - if current_page?(root_path)
+    - unless current_page?(name_path(current_user.name))
       =< link_to "Profile", name_path(current_user.name, current_user.age) 
   - unless signed_in?
     = link_to "Get Started", signup_path, :class => 'get_started'
