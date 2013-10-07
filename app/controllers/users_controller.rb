@@ -16,7 +16,10 @@ class UsersController < ApplicationController
 	end
 	
 	def name
+		puts "&"* 100
 		@user = User.find_by_name(params[:name])
+		puts "@user ============> #{@user.inspect}"
+		puts "current_user ============> #{current_user.inspect}"
 		@relationships = @user.relationships.includes(:followed)
 		@requested_relationships = @relationships.select &:requested?
 		if !params[:age].nil? 

@@ -1,13 +1,2 @@
-/ div.stats
-/   a href=following_user_path(@user)
-/     strong#following.stat
-/       = @user.followed_users.count
-/       |  following
-/   a href=followers_user_path(@user)
-/     strong#followers.stat
-/       = @user.followers.count 
-/       |  followers
-- if Relationship.are_friends?(current_user, @user)
-  |  (you are friends)
-- else
-  = link_to "Add Friend", controller: "relationships", action: "req", name: @user.name, remote: true
+- unless Relationship.are_friends?(current_user, @user) || (current_user == @user)
+  = link_to "Add Friend", controller: "relationships", action: "req", name: @user.name, remote: true, class: "friend_link"
