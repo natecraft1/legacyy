@@ -16,6 +16,9 @@ class RelationshipsController < ApplicationController
 		puts "params = #{params}"
 		@current = current_user
 		@requester = User.find(params[:id])
+		puts "@current = #{@current.inspect}"
+		puts "@requester = #{@requester.inspect}"
+
 		unless @requester.nil?
 			if Relationship.accept(@current, @requester)
 				flash[:notice] = "You are now friends with #{@requester.name}"

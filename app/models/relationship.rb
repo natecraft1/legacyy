@@ -19,11 +19,16 @@ class Relationship < ActiveRecord::Base
   end
 
   def self.accept(acceptor, acceptee)
-  	acceptor_relationship = Relationship.find_by_follower_id_and_followed_id(acceptor, acceptee)
-  	acceptee_relationship = Relationship.find_by_follower_id_and_followed_id(acceptee, acceptor)
+  	acceptor_relationship = Relationship.find_by_follower_id_and_followed_id(acceptor.id, acceptee.id)
+  	acceptee_relationship = Relationship.find_by_follower_id_and_followed_id(acceptee.id, acceptor.id)
+    puts "acceptor_relationship == #{acceptor_relationship.inspect}"
+    puts "acceptee_relationship == #{acceptee_relationship.inspect}"
+
   	if acceptor_relationship.nil? || acceptee_relationship.nil? 
+      puts "if "* 30
   		return false
   	else
+      puts "else " * 30
   		transaction do
   			acceptor_relationship.update_attributes(status: "accepted")
   			acceptee_relationship.update_attributes(status: "accepted")
@@ -47,8 +52,8 @@ class Relationship < ActiveRecord::Base
   end
 
 	def self.request(requester, requestee)
-		return false if are_friends(user, friend)
-    return false if user == friend
+		return false if are_friends?(requester, requestee)
+    return false if requester == requestee
 		requester_relationship = new(follower_id: requester.id, followed_id: requestee.id, status: "pending")
 		requestee_relationship = new(follower_id: requestee.id, followed_id: requester.id, status: "requested")
 		transaction do 

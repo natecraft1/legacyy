@@ -16,10 +16,10 @@ svg
 
 br
 / p Add year 
-- if @requested_relationships.any?
+- if current_user == @user && @requested_relationships.any?
   p You have friend requests from: 
   - @requested_relationships.each do |relationship|
-    - puts @requested_relationships.inspect
+    - puts "@requested_relationships.inspect == #{@requested_relationships.inspect}"
     = link_to relationship.followed.name, name_path(relationship.followed.name)
     = link_to "+", controller: "relationships", action: "accept", id: relationship.followed_id
     = link_to "-", controller: "relationships", action: "reject", id: relationship.followed_id
